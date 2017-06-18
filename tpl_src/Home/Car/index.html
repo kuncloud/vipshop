@@ -1,0 +1,127 @@
+<extend name="Public:base" />
+<block name="style">
+<link rel="stylesheet" href="__HOME__/Car/index.css" />
+</block>
+<block name="js">
+<script>
+var $price = $('.price'),
+	$total = $('.total')
+$(function(){
+	//history.replaceState({},'','{:U("Index/index")}');
+	
+	$('.decr').on('click', function(){
+		setCount('decr', this)
+	})
+	$('.incr').on('click', function(){
+		setCount('incr', this)
+	})
+	setTotal()
+})
+function setCount(type, node){
+	var $count = $(node).siblings('.count'),
+		$price = $(node).parents('.item').find('.price'),
+		count = parseInt($count.html()),
+		price = parseFloat($count.data('price')),
+		id = $count.data('id')
+	count = type == 'incr' ? count + 1 : count - 1
+	if ( count <=0 ) return;
+	
+	$.post('{:U("idecr")}', {id, count}, function(json){
+		if (json.status == 0){
+			$price.html(count*price)
+			$count.html(count)
+			setTotal()
+		}
+	}, 'json')
+}
+
+function cal(){
+	var url = '{:U("Order/car")}'
+	$.post(url, {}, function(json){
+		toast(json.msg, {status: json.status, callback: function(){
+			if (json.status ==0) {
+				var url = "{:U('Order/confirm')}" + '/id/'+json.id
+				location.href = url
+			}
+		}})
+	}, 'json')
+}
+
+function setTotal(){
+	var total = 0
+	$price.each(function(){
+		total += parseFloat($(this).html())
+	})
+	$total.html(total)
+}
+</script>
+</block>
+<block name="content">
+<if condition="$lists">
+	<div class="weui-cells no-border">
+		<volist name="lists" id="v">
+			<div class="item" data-id="{$v['id']}">
+				<div class="weui-media-box weui-media-box_appmsg">
+					<div class="weui-media-box__hd">
+						<img src="__QINIU_IMG__/{$v['corver']}">
+					</div>
+					<div class="weui-media-box__bd">
+						<div class="weui-media-box__title">{$v['name']}</div>
+						<div class="weui-media-box__desc">{$v['standard']}</div>
+					</div>
+					<div class="weui-cell__ft">¥ 
+						<if condition="$v['grid']">
+							<span class="out">{$v['price']*$v['count']}</span>
+							(兑换券)
+						<else/>
+							<span class="price">{$v['price']*$v['count']}</span>
+						</if>
+					</div>
+				</div>
+				<div class="weui-media-box weui-media-box_appmsg option">
+					<div class="weui-media-box__hd">
+					</div>
+					<div class="weui-media-box__bd">
+						<if condition="!$v['grid']">
+							<div class="" style="display:flex;">
+								<span class="decr">-</span>
+								<span class="count" data-id="{$v['id']}" data-price="{$v['price']}">{$v['count']}</span>
+								<span class="incr">+</span>
+							</div>
+						</if>
+					</div>
+					<div class="weui-cell__ft">
+						<img class="img-min-x" onclick="op('确认移除？', '{:U('del', 'id='.$v['id'])}', function(){location.reload()})" src="__PUBLIC_IMAGES__/Order/cancel.png">
+					</div>
+				</div>
+			</div>
+		</volist>
+	</div>
+	<!-- <div class="weui-cells">
+		<div class="weui-cell">
+			<div class="weui-cell__bd">
+				积分抵扣
+			</div>
+			<div class="weui-cell__ft">
+				60
+			</div>
+		</div>
+	</div> -->
+	<div class="fix-bottom-box">
+		<div class="fix-bottom-item">
+			<a class="weui-btn weui-btn_default" href="javascript:;">
+				总计： ¥<span class="total">0</span>
+			</a>
+			<a class="weui-btn weui-btn_confirm" style="max-width: 120px;" href="javascript:cal();">去结算</a>
+		</div>
+	</div>
+<else />
+	<div class="empty">
+		<img src="__PUBLIC_IMAGES__/Order/empty.png">
+		<p>您的购物车空空如也，快去选购商品吧~</p>
+		<div class="bottom-box">
+			<a href="{:U('Jf/expend')}" class="weui-btn btn_primary">去逛逛</a>
+		</div>
+	</div>
+</if>
+</block>

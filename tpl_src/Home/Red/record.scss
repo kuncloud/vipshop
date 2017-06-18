@@ -1,0 +1,30 @@
+@import "../../Public/css/index.scss";
+.main{
+	height: 100%;
+	width: 100%;
+	background: url(../../Public/images/Red/record.png) no-repeat center transparent;
+    background-size: cover;
+    margin: 0 auto;
+	
+	padding: pxtrem(250px) 5% pxtrem(100px) 5%;
+	text-align: center;
+	
+	.content{
+		background-color: #fff;
+		height: 100%;
+		border-radius: $lvBtnDefaultRadius * 4;
+	
+		.weui-cell{
+			.weui-cell__bd{
+				text-align: left;
+				color: $lvColorDefaultSub;
+			}
+			.weui-cell__ft{
+				color: $lvColorHighlight;
+			}
+		}
+	}
+}
+.rotate .main{
+	padding-top: pxtrem(200px);
+}

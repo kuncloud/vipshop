@@ -1,0 +1,47 @@
+@import "../../Public/css/index.scss";
+
+.weui-dialog__custom{
+	.weui-dialog__btn_primary{
+		color: $lvColorHighlight;
+	}
+	.weui-dialog__btn_default{
+		color: $lvColorDefault;
+	}
+	.weui-dialog__bd{
+		text-align: left;
+	}
+}
+
+.first{
+	background-color: #5b617c;
+	color: #fff;
+	font-size: $lvFontDefault;
+	min-height: pxtrem(200px);
+	.weui-cell__bd p{
+		margin-top: $lvMarginDefault;
+	}
+	.none{
+		padding-top: pxtrem(80px);
+	}
+}
+
+.weui-cells{
+	.money{
+		text-align: center;
+		.main{
+			color: $lvColorHighlight;
+			font-size: $lvFontDefault;
+		}
+		.sub{
+			margin-top: $lvMarginSub;
+			color: $lvColorDefaultSub;
+			font-size: $lvFontDefaultSub;
+		}
+	}
+	.weui-check__label{
+		color: $lvColorHighlight;
+		.weui-cell__ft{
+			color: $lvColorHighlight;
+		}
+	}
+}

@@ -1,0 +1,57 @@
+<extend name="Public:base"/><block name="style"><link rel="stylesheet" href="__ADMIN__/Goods/edit.css"/></block><block name="js"><script type="text/javascript">
+var standard = {}
+$(function(){
+	history.replaceState({},'','{:U("Index/index")}');
+	
+	var 	url = '{:U(standard)}'
+    $.post(url, {}, function(json){
+    		standard = json.lists
+	    setChild($('.select_standard_parent'))
+    		if (!'{$info["id"]}'){
+    			$('.select_standard_parent').trigger('change')
+    		}
+    }, 'json')
+    
+    delStandard()
+})
+
+function setChild($obj){
+	$obj.on('change', function(){
+    		var val = $(this).val(),
+    			data = standard[val]['_data'],
+    			html = ''
+    		for (i in data){
+    			var item = data[i]
+			html += '<option value="'+item['id']+'">'+item['name']+'</option>'
+    		}
+    		$(this).parents('.weui-cell').find('.select_standard_child').html(html)
+	})//.trigger('change')
+}
+
+function addStandard(){
+	var $parent = $('.standards'),
+		$html = $parent.find('.weui-cell :last').clone()
+	$parent.append($html)
+	setChild($html.find('.select_standard_parent'))
+	$html.find('.select_standard_parent').trigger('change')
+	setStock()
+	delStandard()
+}
+
+function delStandard(){
+	$('.weui-icon-cancel').on('click', function(){
+		if ($('.standards .weui-cell').length <= 1) return;
+		$(this).parents('.weui-cell').remove()
+		setStock()
+	})
+}
+
+function setStock(){
+	var count = 0
+	$(".standard_count").each(function(){
+		count += parseInt($(this).val())
+	})
+	$("[name='stock']").val(count)
+}
+
+</script></block><block name="content"><form id="form" action="__SELF__" method="POST"> <input type="hidden" name="id" value="{$info['id']}"><weuiuploader id="logo" limit="9" img="val"/><div class="weui-cells weui-cells_form"><div class="weui-cell"><div class="weui-cell__hd"> <label class="weui-label">商品名称</label></div><div class="weui-cell__bd"> <input class="weui-input" name="name" value="{$info['name']}" required placeholder="请输入商品名称"></div></div></div><div class="weui-cells weui-cells_form"><div class="weui-cell weui-cell_select weui-cell_select-after"><div class="weui-cell__hd"> <label class="weui-label">商品类型</label></div><div class="weui-cell__bd"> <select class="weui-select" name="type" required emptyTips="请选择商品类型"><option value="0" <eq name="info['type']" value="0">selected</eq> >虚拟商品</option><option value="1" <eq name="info['type']" value="1">selected</eq>>实物商品</option></select></div></div><div class="weui-cell weui-cell_select weui-cell_select-after"><div class="weui-cell__hd"> <label class="weui-label">商品分类</label></div><div class="weui-cell__bd"> <select class="weui-select" name="classify" required emptyTips="请选择商品分类"><volist name="classify" id="v"><option value="{$v['id']}" <eq name="info['classify']" value="$v['id']">selected</eq>>{$v['name']}</option></volist></select></div></div></div><div class="weui-cells weui-cells_form"><div class="weui-cell"><div class="weui-cell__hd"> <label class="weui-label">价格</label></div><div class="weui-cell__bd"> <input class="weui-input float" type="text" required name="price" value="{$info['price']}" placeholder="请输入价格"></div></div><div class="weui-cell"><div class="weui-cell__hd"> <label class="weui-label">积分</label></div><div class="weui-cell__bd"> <input class="weui-input" type="number" name="jf" value="{$info['jf']}" pattern="[0-9]*" placeholder="请输入积分"></div></div><div class="weui-cell"><div class="weui-cell__hd"> <label class="weui-label">返还积分</label></div><div class="weui-cell__bd"> <input class="weui-input" type="number" name="rebate" value="{$info['rebate']}" pattern="[0-9]*" placeholder="请输入积分"></div></div></div><div class="weui-cells weui-cells_form"><div class="weui-cell weui-cell_switch"><div class="weui-cell__bd">显示在商品列表</div><div class="weui-cell__ft"> <input class="weui-switch" name="status" type="checkbox" <eq name="info['status']" value="1">checked</eq>></div></div></div><div class="weui-cells weui-cells_form"><div class="weui-cell"><div class="weui-cell__bd">商品规格</div></div><div class="standards"><if condition="$info['_standard']"><volist name="info['_standard']" id="val"><div class="weui-cell"> <label class="weui-label"><select name="_standard[]" class="weui-select select_standard_parent"><volist name="standard" id="v"><eq name="v['pid']" value="0"><option value="{$v['id']}" <eq name="v['id']" value="$val['pid']">selected</eq>>{$v['name']}</option></eq></volist></select></label><div class="weui-cell__bd"> <select name="_standard[]" class="weui-select select_standard_child"><volist name="standard" id="v"><eq name="v['id']" value="$val['pid']"><volist name="v['_data']" id="data"><option value="{$data['id']}" <eq name="data['id']" value="$val['sid']">selected</eq>>{$data['name']}</option></volist></eq></volist></select></div><div class="weui-cell__ft"><i class="weui-icon-cancel default"></i></div></div></volist><else/><div class="weui-cell"> <label class="weui-label"><select name="_standard[]" data-obj="{$standard}" class="weui-select select_standard_parent"><volist name="standard" id="v"><option value="{$v['id']}">{$v['name']}</option></volist></select></label><div class="weui-cell__bd"> <select name="_standard[]" class="weui-select select_standard_child"></select></div><div class="weui-cell__ft"><i class="weui-icon-cancel default"></i></div></div></if></div><div class="weui-cell" style="text-align: center;"><div class="weui-cell__bd"> <a href="javascript:addStandard();" style="color: #f16609;">添加商品规格</a></div></div></div><div class="weui-cells__title">总库存为0时，会上架到“已售罄”商品列表，发布后商品同步更新，已库存数字为准。</div><div class="weui-cells weui-cells_form"><div class="weui-cell"><div class="weui-cell__hd"> <label class="weui-label">商品库存</label></div><div class="weui-cell__bd"> <input class="weui-input" type="number" name="remain" value="{$info['remain']}" pattern="[0-9]*" placeholder="请输入库存"></div></div><div class="weui-cell"><div class="weui-cell__hd"> <label class="weui-label">总库存</label></div><div class="weui-cell__bd"> <input class="weui-input" type="number" name="stock" value="{$info['stock']}" pattern="[0-9]*" placeholder="请输入总库存" readonly></div></div></div><div class="weui-cells weui-cells_form"><div class="weui-cell"><div class="weui-cell__hd"> <label class="weui-label">商品详情</label></div></div></div><if condition="$info['img']"><weuiuploader classname="first" id="img" limit="10" img="img"/><else/><weuiuploader classname="first" id="img" limit="10"/></if><div class="weui-cells__title"></div><div class="fix-bottom-box"><div class="fix-bottom-item"> <input type="submit" class="weui-btn weui-btn_confirm" value="上架出售"/></div></div></form></block>

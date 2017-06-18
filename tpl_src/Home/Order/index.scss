@@ -1,0 +1,46 @@
+@import "../../Public/css/index.scss";
+
+.weui-cells{
+	.top{
+		border-bottom: 1px solid $lvColorDefaultLine;
+		.default{
+			color: $lvColorHighlight;
+		}
+		.notice{
+			color: $lvColorHighlightMain;
+		}
+	}
+	
+	.middle{
+		.sub{
+			font-size: $lvFontDefaultSub;
+			margin-right: $lvMarginDefault;
+			font{
+				color: $lvColorHighlight;
+			}
+		}
+		.main{
+			font-size: $lvFontHighlight;
+			color: $lvColorHighlight;
+		}
+	}
+	
+	.bottom{
+		padding: $lvMarginDefault * 2;
+	}
+}
+
+.empty{
+	text-align: center;
+	padding-top: pxtrem(218px);
+	img{
+		height: pxtrem(227px);
+		width: pxtrem(198px);
+	}
+	p{
+		margin-top: pxtrem(68px);
+		color: $lvColorHighlight;
+		font-size: $lvFontHighlight;
+		margin-bottom: pxtrem(40px);
+	}
+}

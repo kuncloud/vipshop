@@ -1,0 +1,26 @@
+@import "../../Public/css/index.scss";
+
+.top{
+	text-align: center;
+	padding: $lvMarginDefault * 2;
+	padding-bottom: $lvMarginDefault;
+	background-color: #fff;
+	span{
+		margin-left: $lvMarginDefault;
+	}
+	p{
+		font-size: $lvFontSpecialLogin;
+	}
+}
+
+.weui-cells{
+	.weui-cell__ft{
+		font-size: $lvFontHighlightMain;
+	}
+	.in{
+		color: #fb3b3d;
+	}
+	.out{
+		color: #96d598;
+	}
+}

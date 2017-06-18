@@ -1,0 +1,148 @@
+<extend name="Public:base" />
+<block name="style">
+<link rel="stylesheet" href="__ADMIN__/Goods/index.css" />
+</block>
+<block name="js">
+<script type="text/javascript">
+$(function(){
+	history.replaceState({},'','{:U("Index/index")}');
+	//init()
+});
+
+function init(){
+	$('.jump_url').on('click', function(){location.href=$(this).data('url')})
+	// 选中
+	$('.weui-cell__bd span:last').on('click', function(){
+		// 显示隐藏条件
+		$('.slide-down').fadeToggle()
+		$(this).toggleClass('show')
+		$('.options_item').fadeOut()
+		return false;
+	})
+	
+	$('.slide-down .weui-cell').on('click', function(){
+		$(this).parents('.slide-down').fadeOut()
+		$('.weui-cell__bd span:last').removeClass('show')
+	})
+	
+	$('body').on('click', function(){
+		$('.slide-down').fadeOut()
+		$('.options_item').fadeOut()
+		$('.weui-cell__bd span:last').removeClass('show')
+	})
+	$('body').on('touchend', function(){
+		//$('.slide-down').fadeOut()
+		//$('.options_item').fadeOut()
+	})
+	
+	// 操作
+	$('.options_btn').on('click', function(){
+		$('.slide-down').fadeOut()
+		$(this).siblings('.options_item').fadeToggle()
+		$(this).parents('.weui-media-box').siblings().find('.options_item').fadeOut()
+		return false;
+	})
+	$('.ado').on('click', function(){
+		op($(this).data('title'), $(this).data('url'), function(){location.href='__SELF__'})
+		return false;
+	})
+	
+}
+
+function listdata(lists){
+	var html = ''
+	for(var i in lists){
+		var item = lists[i]
+		html += '<div class="weui-media-box weui-media-box_appmsg jump_url" data-url="{:U(\'info\')}/id/'+item.id+'">'
+		html += '<div class="weui-media-box__hd"><img src="__QINIU_IMG__/'+item.corver+'"></div>'
+		html += '<div class="weui-media-box__bd">'
+		html += '<div class="weui-media-box__title">'+item.name+'</div>'
+		html += '<div class="weui-media-box__desc">UV：'+item.uv+' &nbsp;&nbsp; PV：'+item.pv+'</div>'
+		html += '<div class="weui-media-box__desc">库存：'+item.stock+' &nbsp;&nbsp; 销量： '+item.sales+'</div>'
+		html += '<div class="weui-media-box__desc">'
+		html += '<span class="num">¥ '+item.price+'</span>'
+		html += '<div class="option_box"><div class="options_item tooltip left" style="display: none;"><div class="tooltip-arrow"></div>'
+		html += '<a href="{:U(\'edit\')}/id/'+item.id+'">编辑</a>'
+		html += '<a href="javascript:;" class="ado" data-title="确认下架？" data-url="{:U(\'status\')}/s/0/id/'+item.id+'">下架</a>'
+		html += '<a href="javascript:;" class="ado" data-title="确认删除？" data-url="{:U(\'del\')}/id/'+item.id+'">删除</a>'
+		html += '</div><div class="options_btn">...</div></div></div></div></div>'
+	}
+	$('.lists').append(html)
+	init()
+}
+</script>
+</block>
+<block name="content">
+<div class="weui-search-bar" id="searchBar">
+    <form class="weui-search-bar__form" action="__SELF__" method="GET">
+        <div class="weui-search-bar__box">
+            <i class="weui-icon-search"></i>
+            <input type="search" class="weui-search-bar__input" id="searchInput" name="name" placeholder="搜索" required="">
+            <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+        </div>
+        <label class="weui-search-bar__label" id="searchText">
+            <i class="weui-icon-search"></i>
+            <span>搜索</span>
+        </label>
+    </form>
+    <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+</div>
+<div class="weui-cells first">
+	<div class="weui-cell select">
+		<div class="weui-cell__bd">
+			<span class="jump_url <if condition='Param(st) elt 1'>active</if>" data-url="{:U('index', 'st=1')}">出售中</span>
+		</div>
+		<div class="weui-cell__bd">
+			<span class="jump_url <if condition='Param(st) eq 2'>active</if>" data-url="{:U('index', 'st=2')}">已售罄</span>
+		</div>
+		<div class="weui-cell__bd">
+			<span class="jump_url <if condition='Param(st) eq 3'>active</if>" data-url="{:U('index', 'st=3')}">已下架</span>
+		</div>
+		<div class="weui-cell__bd">
+			<span class="<if condition='Param(st) eq 4'>active</if> arrow">商品分类</span>
+		</div>
+	</div>
+	<div class="slide-down hidden">
+		<div class="weui-cell">
+			<div class="weui-cell__bd jump_url" data-url="{:U('index', 'st=4')}">所有商品分类</div>
+		</div>
+		<volist name="classify" id="v">
+			<div class="weui-cell">
+				<div class="weui-cell__bd jump_url" data-url="{:U('index', 'st=4&cl='.$v['id'])}">{$v['name']}</div>
+			</div>
+		</volist>
+	</div>
+</div>
+<div class="weui-cells first">
+	<dropload classname="custom" url="{$url}" />
+	<!-- <volist name="lists" id="v">
+		<div class="weui-media-box weui-media-box_appmsg jump_url" data-url="{:U('info', 'id='.$v['id'])}">
+			<div class="weui-media-box__hd">
+				<img src="__QINIU_IMG__/{$v['corver']}">
+			</div>
+			<div class="weui-media-box__bd">
+				<div class="weui-media-box__title">{$v['name']}</div>
+				<div class="weui-media-box__desc">UV：{$v['uv']} &nbsp;&nbsp; PV：{$v['pv']}</div>
+				<div class="weui-media-box__desc">库存：{$v['stock']} &nbsp;&nbsp; 销量： {$v['sales']}</div>
+				<div class="weui-media-box__desc">
+					<span class="num">¥ {$v['price']}</span>
+					<div class="option_box">
+						<div class="options_item tooltip left" style="display: none;">
+							<div class="tooltip-arrow"></div>
+							<a href="{:U('edit', 'id='.$v['id'])}">编辑</a>
+							<a href="javascript:;" class="ado" data-title="确认下架？" data-url="{:U('status', 's=0&id='.$v['id'])}">下架</a>
+							<a href="javascript:;" class="ado" data-title="确认删除？" data-url="{:U('del', 'id='.$v['id'])}">删除</a>
+						</div>
+						<div class="options_btn">...</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</volist> -->
+</div>
+<div class="fix-bottom-box">
+	<div class="fix-bottom-item">
+		<a class="weui-btn weui-btn_confirm" href="{:U('edit')}">发布商品</a>
+	</div>
+</div>
+</block>

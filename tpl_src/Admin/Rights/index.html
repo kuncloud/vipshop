@@ -1,0 +1,43 @@
+<extend name="Public:base" />
+<block name="style">
+<link rel="stylesheet" href="__ADMIN__/Vip/index.css" />
+</block>
+<block name="js">
+<script>
+</script>
+</block>
+<block name="content">
+<form id="form" action="__SELF__" method="POST">
+	<div class="weui-cells weui-cells_checkbox right first">
+		<div class="weui-cell" style="background-color: #fafafa;">
+			<div class="weui-cell__hd"></div>
+			<volist name="vips" id="v">
+				<div class="weui-cell__bd">{$v['name']}</div>
+			</volist>
+		</div>
+		<volist name="rights" id="v">
+			<div class="weui-cell">
+				<div class="weui-cell__hd">{$v['name']}</div>
+				<volist name="vips" id="val">
+					<label class="weui-cell__bd">
+						<input type="checkbox" class="weui-check" name="{$val['id']}[{$v['id']}]" <if condition="strpos(','.$val['rights'], $v['id']) gt 0">checked</if>>
+						<i class="weui-icon-checked"></i>
+					</label>
+				</volist>
+			</div>
+		</volist>
+		<!-- <div class="weui-cell" style="text-align: center;">
+			<div class="weui-cell__bd">
+				<a href="{:U('edit')}" style="color: #fe6609;">新增特权</a>
+			</div>
+		</div> -->
+	</div>
+	<div class="weui-cells__title"></div>
+	<div class="fix-bottom-box">
+		<div class="fix-bottom-item">
+			<!-- <a href="javascript:history.go(-1);" class="weui-btn weui-btn_default">返回</a> -->
+			<input type="submit" class="weui-btn weui-btn_confirm" value="保存" />
+		</div>
+	</div>
+</form>
+</block>

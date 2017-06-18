@@ -1,0 +1,16 @@
+<extend name="Public:base"/><block name="style"><link rel="stylesheet" href="__HOME__/Red/record.css"/></block><block name="js"><script>
+$(function(){
+	
+})
+
+function exchange(id){
+	var url = '{:U("exchange")}'
+	$.post(url, {id}, function(json){
+		if (json.status == 0){
+			location.href=json.url
+		} else {
+			toast(json.msg, {status: 1})
+		}
+	}, 'json')
+}
+</script></block><block name="content"><div class="main"><div class="content"><volist name="lists" id="v"><div class="weui-cell"><div class="weui-cell__hd"> <label class="weui-label">{$v['name']}</label></div><div class="weui-cell__bd"> {:timetostr($v['create_time'])}</div><div class="weui-cell__ft"><switch name="v['status']"><case value='0'> <a href="javascript:exchange({$v['id']});">去兑换</a></case><case value='1'> <a href="javascript:;">已使用</a></case></switch></div></div></volist></div></div></block>

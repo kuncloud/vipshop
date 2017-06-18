@@ -1,0 +1,36 @@
+@import "../../Public/css/index.scss";
+.first{
+	.weui-media-box{
+		padding-top: pxtrem(45px);
+		padding-bottom: pxtrem(45px);
+	}
+	.order{
+		text-align: center;
+		padding-top: pxtrem(30px);
+		padding-bottom: pxtrem(30px);
+		.weui-cell__bd p{
+			margin-top: $lvMarginBig;
+			color: $lvColorDefault;
+			font-size: $lvFontDefaultSub;
+		}
+	}
+}
+.weui-cells{
+	.weui-media-box__bd{
+		.weui-media-box__title{
+			color: #fff;
+			font-size: $lvFontHighlight;
+		}
+		.weui-media-box__desc{
+			color: #fff;
+			font-size: $lvFontDefaultSub;
+			margin-top: pxtrem(26px);
+			span{
+				margin-left: $lvMarginDefault;
+			}
+			a{
+	 			color: #fff;
+			}
+		}
+	}
+}

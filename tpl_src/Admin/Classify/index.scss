@@ -1,0 +1,27 @@
+@import "../../Public/css/index.scss";
+
+.weui-cells{
+	.weui-cell__bd{
+		a{
+			font-size: $lvFontDefault;
+			padding: $lvMarginSub/2 $lvMarginDefault;
+			border: 1px solid $lvColorDefaultLine;
+			border-radius: pxtrem(100px);
+			line-height: 48px;
+		}
+		.add{
+			line-height: 32px;
+			//border-radius: 32px;
+		}
+	}
+}
+
+.confirm-custom{
+	padding: $lvMarginDefault $lvMarginBig;
+	border: 1px solid #e5e5e5;
+	border-radius: 4px;
+}
+
+.weui-dialog__btn_primary{
+	color: $lvColorHighlightMain;
+}

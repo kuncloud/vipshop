@@ -1,0 +1,92 @@
+<extend name="Public:base" />
+<block name="style">
+<link rel="stylesheet" href="__HOME__/Jf/help.css" />
+<link rel="stylesheet" href="__HOME__/Jf/gain.css" />
+</block>
+<block name="js">
+<script>
+</script>
+</block>
+<block name="content">
+<div class="weui-cells first">
+	<div class="weui-cell">
+		<div class="weui-cell__hd">
+			<img src="__PUBLIC_IMAGES__/Jf/jf.png" class="img-min" />
+		</div>
+		<div class="weui-cell__bd">
+			当前积分： {$info['jf']}
+		</div>
+	</div>
+	<div class="weui-slider-box">
+        <div class="weui-slider">
+            <div class="weui-slider__inner">
+                <div class="weui-slider__track_custom"  style="width: 40%;"></div>
+                <div class="weui-slider__handler_custom" style="left: 40%; background-image: url(__PUBLIC_IMAGES__/Jf/circle.png)"></div>
+            </div>
+        </div>
+    </div>
+    <div class="weui-cell">
+    		<volist name="lists" id="v">
+	    		<div class="weui-cell__bd">
+	    			<p>{$v['jf']}</p>
+	    			<p>{$v['name']}</p>
+	    		</div>
+    		</volist>
+    </div>
+</div>
+<div class="weui-cells">
+	<div class="weui-media-box weui-media-box_appmsg">
+		<div class="weui-media-box__hd">
+			<img src="__PUBLIC_IMAGES__/Jf/punch.png" />
+		</div>
+		<div class="weui-media-box__bd">
+			<h4 class="weui-media-box__title">每日打卡</h4>
+			<p class="weui-media-box__desc">连续打卡7日，积分翻三倍</p>
+		</div>
+		<div class="weui-cell__ft">
+			<if condition="$day">
+				<img src="__PUBLIC_IMAGES__/Jf/finish.png" class="img-min-x" />
+				<span class="finish">已打卡{$day}天</span>
+			<else />
+				<a href="javascript:;" class="unfinish ajax_do" data-url="{:U('Punch/punch')}">打卡</a>
+			</if>
+		</div>
+	</div>
+	<div class="weui-media-box weui-media-box_appmsg">
+		<div class="weui-media-box__hd">
+			<img src="__PUBLIC_IMAGES__/Jf/redpack.png" />
+		</div>
+		<div class="weui-media-box__bd">
+			<h4 class="weui-media-box__title">抢红包</h4>
+			<p class="weui-media-box__desc">每天免费抽大奖</p>
+		</div>
+		<div class="weui-cell__ft">
+			<a href="{:U('Red/index')}" class="unfinish">抢红包</a>
+		</div>
+	</div>
+	<div class="weui-media-box weui-media-box_appmsg">
+		<div class="weui-media-box__hd">
+			<img src="__PUBLIC_IMAGES__/Jf/zf.png" />
+		</div>
+		<div class="weui-media-box__bd">
+			<h4 class="weui-media-box__title">转发有礼</h4>
+			<p class="weui-media-box__desc">分享好友即可活的XX积分</p>
+		</div>
+		<div class="weui-cell__ft">
+			<a href="{:U('Share/index')}" class="unfinish">转发有礼</a>
+		</div>
+	</div>
+	<div class="weui-media-box weui-media-box_appmsg">
+		<div class="weui-media-box__hd">
+			<img src="__PUBLIC_IMAGES__/Jf/activity.png" />
+		</div>
+		<div class="weui-media-box__bd">
+			<h4 class="weui-media-box__title">活动积分</h4>
+			<p class="weui-media-box__desc">精选活动，积分等你领</p>
+		</div>
+		<div class="weui-cell__ft">
+			<a href="{:U('Activity/index')}" class="unfinish">加积分</a>
+		</div>
+	</div>
+</div>
+</block>

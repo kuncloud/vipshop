@@ -1,0 +1,138 @@
+<extend name="Public:base"/><block name="style"><link rel="stylesheet" href="__HOME__/Order/index.css"/></block><block name="js"><wxjs/><script type="text/javascript" src="__PUBLIC__/statics/js/wx.js"></script><script>
+$(function(){
+	init()
+	
+	wx.config({
+	    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+	    appId: '{$sign["appId"]}', // 必填，公众号的唯一标识
+	    timestamp: '{$sign["timestamp"]}', // 必填，生成签名的时间戳
+	    nonceStr: '{$sign["nonceStr"]}', // 必填，生成签名的随机串
+	    signature: '{$sign["signature"]}',// 必填，签名，见附录1
+	    jsApiList: ['chooseWXPay'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+	});
+})
+
+function init(){
+	$('.wpay').on('click', function(){
+		pay('{:U("wpay")}', $(this).data('id'))
+		//wpay($(this).data('id'))
+		return false;
+	})
+	$('.ok').on('click', function(){
+		ok($(this).data('url'))
+		return false;
+	})
+	
+	$('.countdown').each(function(){
+		countdown($(this))
+	})
+	
+	$('.jump_url').on('click', function(){location.href=$(this).data('url')})
+}
+
+function wpay(id){
+	var url = '{:U("wpay")}'
+	$.post(url, {id}, function(json){
+		if (json["package"]){
+			wx.ready(function(){
+				wx.chooseWXPay({
+				    timestamp: json["timeStamp"], // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+				    nonceStr: json["nonceStr"], // 支付签名随机串，不长于 32 位
+				    package: json["package"], // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
+				    signType: json["signType"], // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+				    paySign: json["paySign"], // 支付签名
+				    success: function (res) {
+				        // 支付成功后的回调函数
+						payed(id)
+				    }
+				});
+			});
+		} else {
+			alert('订单异常')
+		}
+	}, 'json')
+}
+
+function payed(id){
+	var url = '{:U("payed")}'
+	$.post(url, {id}, function(json){
+		if (json.status == 0){
+			location.reload()
+		}
+	}, 'json')
+}
+
+function ok(url){
+	op('确认收货？', url)
+}
+
+function listdata(lists){
+	var html = '',
+		status = '{$json_status}'
+		status = eval("("+status+")")
+	for (var i in lists){
+		var item = lists[i]
+		
+		html += '<div class="weui-cells jump_url" data-url="{:U('detail')}/id/'+item.id+'">'
+		html += '<div class="weui-cell top"><div class="weui-cell__bd">订单号 '+item.id+'</div>'
+		switch(item.status){
+			case 'ok':
+				html += '<div class="weui-cell__ft default">'
+				break;
+			case 'wait':
+				html += '<div class="weui-cell__ft notice">'
+				break;
+			default:
+				html += '<div class="weui-cell__ft default">'
+				break;
+		}
+		
+		html += status[item.status]
+		html += '</div></div>'
+		html += '<div class="middle no-border">'
+		for (var ii in item['_detail']){
+			var sub = item['_detail'][ii]
+			html += '<div class="weui-media-box weui-media-box_appmsg">'
+			html += '<div class="weui-media-box__hd">'
+			html += '<img src="__QINIU_IMG__/'+sub.corver+'">'
+			html += '</div>'
+			html += '<div class="weui-media-box__bd">'
+			html += '<div class="weui-media-box__title">'+sub['name']+'</div>'
+			html += '<div class="weui-media-box__desc" style="margin-top: 8px;">'+sub['standard']+'</div>'
+			html += '</div>'
+			html += '<div class="weui-cell__ft">'
+			html += '<p style="color: #191919;">¥ '+sub['price']+'</p>'
+			html += '<p>x '+sub['count']+'</p>'
+			html += '</div></div>'
+		}
+		html += '<div class="weui-cell"><div class="weui-cell__bd"></div>'
+		html += '<div class="weui-cell__ft">'
+		html += '<span class="sub">共 <font>'+item['count']+'</font> 件商品</span>'
+		html += '<span class="main">实付款 ¥'+item['total']+'</span>'
+		html += '</div></div></div>'
+		
+		if (item['status'] == 'wait' || item['status'] == 'sending'){
+			html += '<div class="weui-cell bottom"><div class="weui-cell__bd"></div><div class="weui-cell__ft">'
+			switch(item['status']){
+				case 'wait':
+					var time = '{:time()}',
+						d = item.delay_time - time
+					html += '<a href="javascript:;" class="btn_primary wpay" data-id="'+item['id']+'">付款 <span data-time="'+d+'" class="countdown">14:59</span></a>'
+					break;
+				case 'sending':
+					var time = '{:time()}',
+						d = item.confirm_time - time
+					html += '<a href="javascript:;" class="btn_primary ok" data-url="{:U('ok')}?id='+item.id+'">确认收货 <span data-time="'+d+'" class="countdown">14:59</span></a>'
+					break;
+			}
+			
+			html += '</div></div>'
+		}
+		html += '</div>'
+	}
+	$('.lists').append(html)
+	
+	init()
+}
+
+</script></block><block name="content"><empty name="lists"><div class="empty"> <img src="__PUBLIC_IMAGES__/Order/order_empty.png"><p>您还没有订单记录哟，去商城看看吧~</p><div class="bottom-box"> <a href="{:U('Jf/expend')}" class="weui-btn btn_primary">去逛逛</a></div></div></empty><volist name="lists" id="v"><div class="weui-cells jump_url" data-url="{:U('detail', 'id='.$v['id'])}"><div class="weui-cell top"><div class="weui-cell__bd"> 订单号 {$v['id']}</div><switch name="v['status']"><case value="ok"><div class="weui-cell__ft default"></case><case value="wait"><div class="weui-cell__ft notice"></case><default/><div class="weui-cell__ft default"></switch> {$status[$v['status']]}</div></div><div class="middle no-border"><volist name="v['_detail']" id="sub"><div class="weui-media-box weui-media-box_appmsg"><div class="weui-media-box__hd"> <img src="__QINIU_IMG__/{$sub['corver']}"></div><div class="weui-media-box__bd"><div class="weui-media-box__title">{$sub['name']}</div><div class="weui-media-box__desc" style="margin-top: 8px;">{$sub['standard']}</div></div><div class="weui-cell__ft"><p style="color: #191919;">¥ {$sub['price']}</p><p>x {$sub['count']}</p></div></div></volist><div class="weui-cell"><div class="weui-cell__bd"></div><div class="weui-cell__ft"> <span class="sub">共 <font>{$v['count']}</font> 件商品</span> <span class="main">实付款 ¥{$v['total']}</span></div></div></div><if condition="$v['status'] eq 'wait' || $v['status'] eq 'sending'"><div class="weui-cell bottom"><div class="weui-cell__bd"></div><div class="weui-cell__ft"><switch name="v['status']"><case value="wait"> <a href="javascript:;" class="btn_primary wpay" data-id="{$v['id']}">付款 <span data-time="{$v['delay_time'] - time()}" class="countdown">14:59</span></a></case><case value="sending"> <a href="javascript:;" class="btn_primary ok" data-url="{:U('ok', 'id='.$v['id'])}">确认收货 <span data-time="{$v['confirm_time'] - time()}" class="countdown">14:59</span></a></case></switch></div></div></if></div></volist><dropload classname="custom" url="load?st={$st}" page="2"/></block>

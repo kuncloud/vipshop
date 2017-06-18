@@ -1,0 +1,61 @@
+@import "../../Public/css/index.scss";
+
+.empty{
+	text-align: center;
+	padding-top: pxtrem(218px);
+	img{
+		height: pxtrem(227px);
+		width: pxtrem(231px);
+	}
+	p{
+		margin-top: pxtrem(68px);
+		color: $lvColorHighlight;
+		font-size: $lvFontHighlight;
+		margin-bottom: pxtrem(40px);
+	}
+}
+
+.out{
+	text-decoration: line-through;
+}
+
+.weui-cells{
+	.item{
+		padding-bottom: pxtrem(40px);
+	}
+	.option{
+		margin-top: 0;
+		padding-top: 0;
+		height: pxtrem(58px);
+		span{
+			float: left;
+			border: 1px solid $lvColorDefaultLine;
+			padding: 0 $lvMarginDefault;
+			text-align: center;
+			font-size: pxtrem(34px);
+			height: pxtrem(58px);
+			line-height: pxtrem(58px);
+			width: pxtrem(60px);
+		}
+		.count{
+			width: pxtrem(70px);
+			border: 1px solid $lvColorDefaultLine;
+		}
+		.decr{
+			color: $lvColorDefaultLine;
+			border-right: none;
+		}
+		.incr{
+			border-left: none;
+		}
+	}
+}
+
+.fix-bottom-box{
+	.fix-bottom-item{
+		.weui-btn_default{
+		    text-align: left;
+	    		padding-left: 24px;
+		}
+	}
+}

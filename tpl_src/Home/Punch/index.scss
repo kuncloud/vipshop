@@ -1,0 +1,131 @@
+@import "../../Public/css/index.scss";
+
+.main{
+	height: 100%;
+	width: 100%;
+	background: url(../../Public/images/Punch/back.png) no-repeat center transparent;
+    background-size: cover;
+    margin: 0 auto;
+	padding-top: pxtrem(60px);
+	padding-bottom: pxtrem(60px);
+	
+	.circle{
+		width: 140px;
+		height: 140px;
+	    margin: auto;
+		padding: 10px;
+	    border-radius: 100%;
+	    border: 1px solid #ff8d26;
+		.circle_sub{
+			padding: 10px;
+		    border-radius: 100%;
+		    border: 1px solid #fb9b47;
+			
+			.day{
+				text-align: center;
+				padding-top:20px;
+				background-color: #fff;
+				border-radius: 100%;
+			
+				.p{
+					color: $lvColorDefault;
+				}
+				.count{
+					margin-top: -12px;
+					font{
+						color: $lvColorHighlightMain;
+						font-size: $lvFontSpecialBalance;
+					}
+				}
+			}
+		}
+	}
+	
+	.duihuan{
+	    margin: -30px auto 10px auto;
+		height: 50px;
+		width: 200px;
+		padding: 10px 20px;
+		color: #fff;
+		background: url(../../Public/images/Punch/btn_back.png) no-repeat center transparent;
+    		background-size: cover;
+	}
+	
+	.box{
+		height: 120px;
+		line-height: 60px;
+		width: 90%;
+		margin: auto;
+		background-color: #fff;
+		border-radius: $lvBtnDefaultRadius * 3;
+		padding: 0 $lvMarginDefault;
+		
+		.num, .line, .day{
+			display: flex;
+			div{
+				text-align: center;
+				flex: 1;
+			}
+			.mult{
+				color: #f6c200;
+			}
+		}
+		
+		.line{
+			background-color: $lvColorDefaultLine;
+			height: 2px;
+			width: 90%;
+			margin: auto;
+			
+			.active{
+				background-color: #2bb637;
+				div{
+					background-color: #2bb637;
+					height: 10px;
+					width: 10px;
+					margin-top: -4px;
+					border-radius: 100%;
+					float: left;
+				}
+			}
+			.finish{
+				div{
+					background-color: #fff !important;
+					height: 20px;
+					width: 20px;
+					margin-top: -10px;
+					background: url(../../Public/images/Punch/finish.png) no-repeat center transparent;
+    					background-size: cover;
+				}
+			}
+			.default{
+				div{
+					background-color: #fff;
+					height: 10px;
+					width: 10px;
+					margin-top: -4px;
+					border-radius: 100%;
+					float: left;
+					border: 2px solid $lvColorDefaultLine;
+				}
+			}
+		}
+	}
+	
+	.bottom{
+		padding: $lvMarginDefault * 2;
+		color: #c44f09;
+		margin-top: $lvMarginBig;
+		.top{
+			text-align: center;
+			.line{
+				height: 1px;
+				display: inline-block;
+				padding: 0 33px;
+				background-color: #b94d00;
+				margin: 0 20px;
+		    		margin-bottom: 5px;
+			}
+		}
+	}
+}

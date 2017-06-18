@@ -1,0 +1,228 @@
+<extend name="Public:base" />
+<block name="style">
+<link rel="stylesheet" href="__HOME__/Goods/info.css" />
+</block>
+<block name="js">
+<script>
+$(function(){
+	// 锚点
+	$('.img_detail').on('click', function(){
+		document.getElementById('detail').scrollIntoView()
+		return false;
+	})
+	
+	// 选中规格
+	$('.standard').on('click', function(){
+		$(this).parent().siblings().find('.standard').removeClass('active')
+		$(this).addClass('active')
+		//setPrice()
+	})
+	// 商品数 加减
+	$('.decr').on('click', function(){
+		setCount('decr')
+	})
+	$('.incr').on('click', function(){
+		setCount('incr')
+	})
+	// 点赞
+	$('.phraise').on('click', function(){
+		var url = '{:U("praise")}',
+			id = '{$info["id"]}'
+		$.post(url, {id}, function(json){
+			location.reload()
+		}, 'json')
+		/* if ($(this).hasClass('like')) {
+			$(this).attr('src', '__PUBLIC_IMAGES__/Goods/dislike.png')
+		} else {
+			$(this).attr('src', '__PUBLIC_IMAGES__/Goods/like.png')
+		}
+		$(this).toggleClass('like') */
+	})
+})
+
+function setPrice(){
+	var $price = $('.price'),
+		price = parseFloat($price.data('price')) || 0
+	$('.active').each(function(){
+		var add = parseFloat($(this).data('price')) || 0
+		price += add
+	})
+	$price.html(price)
+}
+
+// 加入购入车
+function add(grid){
+	var $parent = $('.standard_parent'),
+		flag = true,
+		standard = detail = sids = ''
+	$parent.each(function(){
+		var pid = $(this).data('id'),
+			$active = $(this).find('.active')
+			id = $active.data('id')
+			sid = $active.data('sid')
+		if (!id){
+			weui.alert('请选择'+ $(this).data('name'))
+			flag = false;
+		}
+		detail += ',' + pid + ':' + id
+		standard += ' ' + $active.data('name')
+		sids += ',' + sid
+	})
+	if (flag){
+		detail = detail.substring(1)
+		standard = standard.substring(1)
+		sids = sids.substring(1)
+		var count = parseInt($('.count').html()),
+			gid = '{$info["id"]}',
+			url = '{:U("Car/edit")}'
+		if (grid && count > 1){
+			weui.alert('一次只能兑换一个商品');
+			return false;
+		}
+		$.post(url, {gid, detail, standard, count, grid, sids}, function(json){
+			if(json.status == 0){
+				toast('已加入购物车', {status: 0})
+				var $car = $('.car_count')
+				$car.removeClass('hidden')
+				$car.html(parseInt($car.html()) + count)
+				/* weui.confirm('成功加入购物车', {
+					buttons: [{
+				        label: '留在当前页面',
+				        type: 'default'
+				    }, {
+				        label: '前往购物车',
+				        type: 'primary',
+				        onClick: function(){ location.href='{:U("Car/index")}' }
+				    }]
+				}) */
+			} else {
+				weui.alert(json.msg)
+			}
+		}, 'json')
+	}
+}
+
+function setCount(type){
+	var $count = $('.count'),
+		val = parseInt($count.html());
+	val = type == 'incr' ? val + 1 : val - 1
+	if ( val <= 0 ) return;
+	$count.html(val)
+}
+</script>
+</block>
+<block name="content">
+<slider data="{$data}" intval="3000" classname="index-slider" />
+<div class="img_detail">
+	<p>图 文</p>
+	<p>详 情</p>
+</div>
+<div class="weui-cells first">
+	<div class="weui-cell__col no-border">
+		<div class="weui-cell">
+			{$info['name']}
+		</div>
+		<div class="weui-cell">
+			<div class="weui-cell__bd">
+				<if condition="$info['price']">
+					<span class="main">¥ <span class="price" data-price="{$info['price']}">{$info['price']}</span></span>
+				</if>
+				<if condition="$info['jf']">
+					<span>
+						<if condition="$info['price']">
+						&nbsp;+
+						</if>
+						{$info['jf']}积分
+					</span>
+				</if>
+			</div>
+			<div class="weui-cell__ft">
+				<if condition="$praised">
+					<img src="__PUBLIC_IMAGES__/Goods/like.png" class="phraise img-min-x like" />
+				<else/>
+					<img src="__PUBLIC_IMAGES__/Goods/dislike.png" class="phraise img-min-x" />
+				</if>
+				{$info['praise']} 人点赞
+			</div>
+		</div>
+	</div>
+</div>
+<div class="weui-cells">
+	<div class="weui-cell__col no-border product">
+		<volist name="info['_standard']" id="v">
+			<div class="weui-cell" style="align-items: baseline;">
+				<div class="weui-cell__hd">
+					<label class="weui-label">{$standard[$key]['name']}</label>
+				</div>
+				<div class="weui-cell__bd standard_parent" data-id="{$key}" data-name="{$standard[$key]['name']}">
+					<volist name="v" id="sub">
+						<div style="padding: 5px; margin: 5px;">
+							<span class="standard" data-sid="{$sub['id']}" data-id="{$sub['sid']}" data-name="{$standard[$sub['sid']]['name']}" data-price="{$sub['price']}">
+								{$standard[$sub['sid']]['name']}
+							</span>
+						</div>
+					</volist>
+				</div>
+			</div>
+		</volist>
+<!-- 		<volist name="info['_standard']" id="v">
+			<div class="weui-cell" style="align-items: baseline;">
+				<div class="weui-cell__hd">
+					<label class="weui-label">{$standard[$key]['name']}</label>
+				</div>
+				<div class="weui-cell__bd standard_parent" data-id="{$key}" data-name="{$standard[$key]['name']}">
+					<volist name="v" id="sub">
+						<div style="padding: 5px; margin: 5px;">
+							<span class="standard" data-id="{$sub}" data-name="{$standard[$sub]['name']}">
+								{$standard[$sub]['name']}
+							</span>
+						</div>
+					</volist>
+				</div>
+			</div>
+		</volist> -->
+		<div class="weui-cell">
+			<div class="weui-cell__hd">
+				<label class="weui-label">
+					数量
+				</label>
+			</div>
+			<div class="weui-cell__bd option-box">
+				<span class="decr">-</span>
+				<span class="count">1</span>
+				<span class="incr">+</span>
+<!-- 				<a class="decr">-</a>
+				<span class="count">1</span>
+				<a class="incr">+</a> -->
+			</div>
+		</div>
+	</div>
+</div>
+<div class="detail_title" id="detail">
+	<div class="line"></div>
+	<div class="detail">商品详情</div>
+	<div class="line"></div>
+</div>
+<div class="weui-cells">
+	<volist name="info['img']" id="v">
+		<img src="{$v}">
+	</volist>
+</div>
+<if condition="Param('view') neq 1">
+<div class="fix-bottom-box">
+	<div class="fix-bottom-item">
+		<a class="weui-btn weui-btn_default" href="{:U('Car/index')}">
+			<img src="__PUBLIC_IMAGES__/Goods/car.png" class="img-min-x" />
+			<p>
+				购物车
+			</p>	
+			<span class="car_count <eq name='count' value='0'>hidden</eq>">{$count}</span>
+		</a>
+		<a class="weui-btn weui-btn_confirm" href="javascript:add();">加入购物车</a>
+		<!-- <if condition="$gift">
+			<a class="weui-btn weui-btn_confirm" href="javascript:add({$gift['id']});">兑换</a>
+		</if> -->
+	</div>
+</div>
+</if>
+</block>

@@ -1,0 +1,28 @@
+<extend name="Public:base"/><block name="style"><link rel="stylesheet" href="__HOME__/Red/index.css"/></block><block name="js"><script>
+$(function(){
+	var $open = $('.openbox')
+	$('a.weui-cell__bd').on('click', function(){
+		var url = '{:U("open")}'
+		$.post(url, {}, function(json){
+			if (json.status == 1){
+				toast(json.msg, {status: 1})
+			} else {
+				$open.removeClass('hidden')
+				var content = title = ''
+				if (json.info){
+					content = json.info.name + ' x1'
+					title = '恭喜中奖'
+				} else {
+					content = '谢谢参与'
+					title = '继续努力'
+				}
+				$open.find('.sub').html(title)
+				$open.find('.special').html(content)
+			}
+		}, 'json')
+	})
+	$('.weui-icon-cancel').on('click', function(){
+		$open.addClass('hidden')
+	})
+})
+</script></block><block name="content"><div class="main" style=""><p class="title">点击红包抽奖，每天1次机会</p><div class="weui-cell__col no-border" style="padding-bottom: 0; padding-top:0;"><div class="weui-cell"> <a class="weui-cell__bd"><img src="__PUBLIC_IMAGES__/Red/close.png"></a> <a class="weui-cell__bd"><img src="__PUBLIC_IMAGES__/Red/close.png"></a> <a class="weui-cell__bd"><img src="__PUBLIC_IMAGES__/Red/close.png"></a></div><div class="weui-cell"> <a class="weui-cell__bd"><img src="__PUBLIC_IMAGES__/Red/close.png"></a> <a class="weui-cell__bd"><img src="__PUBLIC_IMAGES__/Red/close.png"></a> <a class="weui-cell__bd"><img src="__PUBLIC_IMAGES__/Red/close.png"></a></div><div class="weui-cell view"> <a href="{:U('record')}">查看我的中奖纪录</a></div></div><div class="openbox hidden"><div class="open"><i class="weui-icon-cancel"></i><p class="sub">继续努力</p><p class="special">谢谢参与</p> <a class="default" href="{:U('record')}">查看领取详情 ></a></div></div></div></block>

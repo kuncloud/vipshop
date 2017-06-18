@@ -1,0 +1,34 @@
+<extend name="Public:base"/><block name="style"><link rel="stylesheet" href="__ADMIN__/Classify/index.css"/></block><block name="js"><script>
+$(function(){
+})
+function edit(id, name){
+	name = name || ''
+	var content = '<input id="name" class="confirm-custom" value="'+name+'" />';
+	
+	weui.confirm(content, function(){
+		var name = $('#name').val()
+		if (!name){
+			toast('请输入类别', {status: 1})
+			return false;
+		}
+		var url = '{:U("edit")}'
+		$.post(url, {name, id}, function(json){
+			if (json.status == 0){
+				toast('添加成功', {
+					callback: function(){
+						location.reload()
+					}
+				})
+			} else {
+				toast(json.msg || '操作异常', {status: 1})
+			}
+		},'json')
+		
+		return false;
+	},{
+	    title: "添加商品分类"
+	});
+	$('#name').focus()
+}
+
+</script></block><block name="content"><div class="weui-cells"><div class="weui-cell"><div class="weui-cell__bd" id="lists"><volist name="lists" id="v"> <a href="javascript:edit({$v['id']}, '{$v['name']}');">{$v['name']}</a></volist> <a href="javascript:edit();" class="add">+</a></div></div></div></block>

@@ -1,0 +1,51 @@
+<extend name="Public:base" />
+<block name="style">
+<link rel="stylesheet" href="__HOME__/Record/index.css" />
+</block>
+<block name="js">
+<script>
+function listdata(lists){
+	var html = ''
+	for (var i in lists){
+		var item = lists[i]
+		html += '<div class="weui-media-box weui-media-box_appmsg"><div class="weui-media-box__bd">'
+		html += '<h4 class="weui-media-box__title">'+item.title+'</h4>'
+		html += '<p class="weui-media-box__desc">'+item.create_time+'</p></div>'
+		html += '<div class="weui-cell__ft">'
+		if (item.jf > 0){
+			html += '<span class="in">+'+item.jf+'</span>'
+		} else {
+			html += '<span class="out">'+item.jf+'</span>'
+		}
+		html += '</div></div>'
+	}
+	$('.lists').append(html)
+}
+</script>
+</block>
+<block name="content">
+<div class="top">
+	<img src="__PUBLIC_IMAGES__/Jf/jf.png" class="img-min" /><span>我的积分</span>
+	<p>{$jf}</p>
+</div>
+<div class="weui-cells">
+	<dropload classname="custom" url="{$load}" />
+	<!-- <volist name="lists" id="v">
+		<div class="weui-media-box weui-media-box_appmsg">
+			<div class="weui-media-box__bd">
+				<h4 class="weui-media-box__title">{$v['title']}</h4>
+				<p class="weui-media-box__desc">
+					{:timetostr($v['create_time'])}
+				</p>
+			</div>
+			<div class="weui-cell__ft">
+				<if condition="$v['jf'] gt 0">
+					<span class="in">+{$v['jf']}</span>
+				<else />
+					<span class="out">{$v['jf']}</span>
+				</if>
+			</div>
+		</div>
+	</volist> -->
+</div>
+</block>

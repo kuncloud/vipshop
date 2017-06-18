@@ -1,0 +1,34 @@
+<extend name="Public:base"/><block name="style"><link rel="stylesheet" href="__ADMIN__/Standard/index.css"/></block><block name="js"><script>
+$(function(){
+})
+function edit(pid, pname, id, name){
+	name = name || ''
+	pname = pname ? '添加'+pname : '添加规格'
+	var content = '<input id="name" class="confirm-custom" value="'+name+'" />';
+	
+	weui.confirm(content, function(){
+		var name = $('#name').val()
+		if (!name){
+			toast('请输入类别', {status: 1})
+			return false;
+		}
+		var url = '{:U("edit")}'
+		$.post(url, {name, id, pid}, function(json){
+			if (json.status == 0){
+				toast('添加成功', {
+					callback: function(){
+						location.reload()
+					}
+				})
+			} else {
+				toast(json.msg || '操作异常', {status: 1})
+			}
+		},'json')
+		
+		return false;
+	},{
+	    title: pname
+	});
+	$('#name').focus()
+}
+</script></block><block name="content"><div class="weui-cells"><volist name="lists" id="v"><div class="weui-cell"><div class="weui-cell__hd">{$v['name']}</div><div class="weui-cell__bd standard"><volist name="v['_data']" id="val"> <a href="javascript:edit({$v['id']}, '{$v['name']}', {$val['id']}, '{$val['name']}');">{$val['name']}</a></volist> <a href="javascript:edit({$v['id']}, '{$v['name']}');" class="add">+</a></div></div></volist><div class="weui-cell"><div class="weui-cell__bd bottom"> <a href="javascript:edit(0);">添加规格</a></div></div></div></block>

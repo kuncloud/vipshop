@@ -1,0 +1,23 @@
+<extend name="Public:base" />
+<block name="style">
+<link rel="stylesheet" href="__HOME__/Index/index.css" />
+</block>
+<block name="js">
+<script>
+$(function(){
+})
+</script>
+</block>
+<block name="content">
+<div class="weui-cells product first">
+	<div class="weui-cell top">
+		<div class="weui-cell__bd" style="text-align: left;">
+			<img src="__PUBLIC_IMAGES__/best.png" style="width: 120px;">
+		</div>
+		<div class="weui-cell__ft">
+			<span class="zsdg" data-kf="{:get_config(CONFIG_KF)['val']}" data-phone="{$phone}">我的客服</span>
+		</div>
+	</div>
+	<dropload classname="custom" url="load_goods" />
+</div>
+</block>

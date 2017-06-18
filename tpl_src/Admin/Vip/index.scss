@@ -1,0 +1,33 @@
+@import "../../Public/css/index.scss";
+
+.list{
+	.weui-cell__hd{
+		margin-right: $lvMarginBig*2;
+	}
+	.weui-cell__bd{
+		padding: $lvMarginDefault;
+		span{
+			border: 1px solid $lvColorDefaultLine;
+			padding: $lvMarginDefault $lvMarginDefault*2;
+			margin: $lvMarginDefault;
+		}
+	}
+}
+
+.right{
+	.weui-cell__hd{
+		width: 100px;
+	}
+}
+
+.settings{
+	.weui-cells{
+		.weui-input{
+			border: 1px solid $lvColorDefaultLine;
+			height: pxtrem(80px);
+			width: pxtrem(128px);
+			text-align: center;
+			//padding: $lvMarginDefault $lvMarginBig*2;
+		}
+	}
+}

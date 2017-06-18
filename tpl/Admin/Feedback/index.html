@@ -1,0 +1,17 @@
+<extend name="Public:base"/><block name="style"></block><block name="js"><script type="text/javascript">
+$(function(){
+});
+
+function listdata(lists){
+	var html = ''
+	for(var i in lists){
+		var item = lists[i]
+		html += '<a href="{:U(\'info\')}/id/'+item.id+'" class="weui-cell weui-cell_access">'
+		html += '<div class="weui-cell__hd" style="margin-right: 8px;">'+item.username+'</div>'
+		html += '<div class="weui-cell__bd">'+item.content+'</div>'
+		html += '<div class="weui-cell__ft">'+item.create_time+'</div>'
+		html += '</a>'
+	}
+	$('.lists').append(html)
+}
+</script></block><block name="content"><div class="weui-cells"><dropload classname="custom" url="load"/></div></block>

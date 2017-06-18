@@ -1,0 +1,188 @@
+@import "./variable.scss";
+@import "./tips.scss";
+
+/* 专属导购弹窗 */
+.custom-classname{
+	p{
+		color: $lvColorDefault;
+	}
+	.num{
+		color: #000;
+		font-size: $lvFontSpecialLogin;
+		margin-top: pxtrem(20px);
+		margin-bottom: pxtrem(20px);
+	}
+	.weui-dialog__btn_primary{
+		color: #e2ae3a;
+	}
+}
+
+.weui-cell__col{
+	padding: 10px 15px;
+	position: relative;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	flex-direction:column;
+}
+
+.no-border{
+	.weui-cell, .weui-media-box{
+		&:before, &:after{
+			border-top: none;
+			border-bottom: none;
+		}
+	}
+}
+
+.btn_default{
+	font-size: $lvFontDefault;
+	color: $lvBtnMainBgColor;
+	padding: pxtrem(12px) pxtrem(22px);
+	border: pxtrem(1px) solid $lvBtnMainBgColor;
+	border-radius: $lvBtnDefaultRadius;
+}
+.btn_primary{
+	font-size: $lvFontDefault;
+	color: $lvBtnMainFontColor;
+	background-color: $lvBtnMainBgColor;
+	padding: pxtrem(14px) pxtrem(22px);
+	border: 1px;
+	border-radius: $lvBtnDefaultRadius;
+}
+
+.bottom-box{
+	margin-top: $lvMarginBig;
+	padding: $lvMarginDefault * 2;
+	display: flex;
+	width: 100%;
+	.weui-btn{
+		flex: 1;
+		margin: 0;
+	}
+	.weui-btn__default{
+		border: pxtrem(1px) solid $lvBtnMainBgColor;
+		color: $lvBtnMainBgColor;
+	}
+	.weui-btn__confirm{
+		background-color: $lvColorHighlightMain;
+		color: #fff;
+	}
+}
+
+.fix-bottom-box{
+    padding-bottom:pxtrem(98px);
+    .fix-bottom-item{
+        position:fixed;
+        bottom:0;
+        left:0;
+        width:100%;
+        height:pxtrem(98px);
+        overflow:hidden;
+
+        display:flex;
+
+        .weui-btn{
+            flex:1;
+            margin:0;
+			border: none;
+			border-radius: 0;
+			font-size: $lvFontHighlightMain;
+			height: pxtrem(98px);
+			line-height: pxtrem(98px);
+			&:after{
+				border: none;
+				border-radius: 0;
+			}
+        }
+        .weui-btn_default{
+			background: #fff;
+        		font-size: $lvFontHighlight;
+        		color: $lvColorDefault;
+        }
+        .weui-btn_confirm{
+			background: $lvColorHighlightMain;
+        }
+    }
+    &.no-fix {
+        padding-bottom:0;
+        .fix-bottom-item{
+            position:relative;
+        }
+    }
+}
+
+.page-tips{
+    padding-top:pxtrem(228px);
+    text-align:center;
+    color:$lvColorHighlight;
+    i{
+        color:$lvColorDefaultTip;
+        &:before{
+            display:inline-block;
+            font-size:pxtrem(144px);
+            padding:pxtrem(55px);
+            border:pxtrem(2px) solid;
+            border-radius:50%;
+        }
+    }
+    .main{
+        margin-top:pxtrem(52px);
+        font-size:$lvFontHighlightMain;
+    }
+    .sub{
+        margin-top:pxtrem(32px);
+        font-size:$lvFontDefault;
+    }
+}
+
+.first{
+	margin-top: 0;
+}
+
+.hidden{
+	display: none;
+}
+
+.weui_cell.auto_height{
+    height:auto;
+    line-height:auto;
+}
+
+.weui-cells{
+	.weui-media-box__desc{
+		margin-top: $lvMarginSub*0.7;
+	}
+}
+
+// picker
+.weui-picker{
+	position: absolute;
+}
+.weui_cell_primary{
+	display: flex;
+	.weui_select{
+		-webkit-appearance: none;
+	    border: 0;
+	    outline: 0;
+	    background-color: transparent;
+	    width: 100%;
+	    font-size: inherit;
+	    height: 43px;
+	    line-height: 44px;
+	    position: relative;
+	    z-index: 1;
+	    padding-left: 0;
+		padding-right: 30px;
+	}
+}
+
+.weui-cells_form{
+	.weui-input, .weui-select{
+		text-align: right;
+	}
+}
+
+.weui-icon-cancel.default{
+	color: #ddd;
+}

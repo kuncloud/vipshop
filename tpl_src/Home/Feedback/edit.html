@@ -1,0 +1,23 @@
+<extend name="Public:base" />
+<block name="style">
+</block>
+<block name="js">
+<script>
+</script>
+</block>
+<block name="content">
+<form id="form" action="__SELF__" method="POST">
+	<input type="hidden" name="id" value="{$info['id']}" />
+	<div class="weui-cells weui-cells_form">
+		<div class="weui-cell">
+			<div class="weui-cell__bd">
+				<textarea class="weui-textarea" name="content" rows="4" required placeholder="请输入反馈信息"></textarea>
+				<!-- <input class="weui-input" name="content" value="" required placeholder="请输入反馈信息" style="text-align: left;"> -->
+			</div>
+		</div>
+	</div>
+	<div class="bottom-box">
+		<input type="submit" class="weui-btn weui-btn__confirm" value="提交" />
+	</div>
+</form>
+</block>

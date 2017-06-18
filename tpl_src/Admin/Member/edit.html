@@ -1,0 +1,86 @@
+<extend name="Public:base" />
+<block name="style">
+<link rel="stylesheet" href="__ADMIN__/Member/index.css" />
+</block>
+<block name="js">
+<script type="text/javascript">
+var province, city, district
+$(function(){
+	history.replaceState({},'','{:U("Index/index")}');
+	
+	province = "{$info['province']}" || "{$default['val'][0]}"
+		city = "{$info['city']}" || "{$default['val'][1]}"
+	district = "{$info['district']}" || "{$default['val'][2]}"
+})
+</script>
+</block>
+<block name="content">
+<form action="__SELF__" id="form" method="POST">
+	<input type="hidden" name="id" value="{$info['id']}" />
+	<div class="weui-cells weui-cells_form">
+		<div class="weui-cell">
+			<div class="weui-cell__hd">
+				<label class="weui-label">姓名</label>
+			</div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" name="username" value="{$info['username']}" required emptyTips="请输入姓名">
+			</div>
+		</div>
+	</div>
+	<div class="weui-cells weui-cells_form">
+		<div class="weui-cell">
+			<div class="weui-cell__hd">
+				<label class="weui-label">联系电话</label>
+			</div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" name="phone" value="{$info['phone']}" type="number" required emptyTips="请输入手机号">
+			</div>
+		</div>
+		<div class="weui-cell">
+			<div class="weui-cell__hd">
+				<label class="weui-label">IMEI</label>
+			</div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" name="imei" value="{$info['imei']}" type="number" required emptyTips="请输入IMEI号">
+			</div>
+		</div>
+	</div>
+	<div class="weui-cells weui-cells_form">
+		<div class="weui-cell weui-cell_select weui-cell_select-after">
+			<div class="weui-cell__hd">
+				<label class="weui-label">性别</label>
+			</div>
+			<div class="weui-cell__bd weui_cell_primary">
+				<select class="weui_select" name="gender">
+					<option value="0" <eq name="info['gender']" value="0">selected</eq>>男</option>
+					<option value="1" <eq name="info['gender']" value="1">selected</eq>>女</option>
+				</select>
+			</div>
+		</div>
+		<div class="weui-cell">
+			<div class="weui-cell__hd">
+				<label class="weui-label">年龄</label>
+			</div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" name="age" value="{$info['age']}" type="number" required emptyTips="请输入年龄">
+			</div>
+		</div>
+		<div class="weui-cell weui-cell_select weui-cell_select-after">
+			<div class="weui-cell__hd">
+				<label class="weui-label">地址</label>
+			</div>
+			<div id="distpicker" class="weui-cell__bd weui_cell_primary">
+				<select class="weui_select" name="province" data-province="省份"></select>
+				<select class="weui_select" name="city" data-city="城市"></select>
+				<select class="weui_select" name="district" data-district="行政区"></select>
+			</div>
+		</div>
+	</div>
+	<div class="fix-bottom-box">
+		<div class="fix-bottom-item">
+			<a href="javascript:history.go(-1);" class="weui-btn weui-btn_default">取消</a>
+			<input type="submit" class="weui-btn weui-btn_confirm" value="保存"/>
+		</div>
+	</div>
+</form>
+</block>

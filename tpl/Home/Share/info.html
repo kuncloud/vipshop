@@ -1,0 +1,53 @@
+<extend name="Public:base"/><block name="style"><link rel="stylesheet" href="__HOME__/Share/info.css"/></block><block name="js"><wxjs/><script>
+$(function(){
+	wx.config({
+	    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+	    appId: '{$sign["appId"]}', // 必填，公众号的唯一标识
+	    timestamp: '{$sign["timestamp"]}', // 必填，生成签名的时间戳
+	    nonceStr: '{$sign["nonceStr"]}', // 必填，生成签名的随机串
+	    signature: '{$sign["signature"]}',// 必填，签名，见附录1
+	    jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+	});
+	wx.ready(function(){
+		share()
+	});
+	wx.error(function(res){
+		alert(res)
+	});
+})
+
+function share(){
+	wx.onMenuShareAppMessage({
+	    title: '积分商城', // 分享标题
+	    desc: '{$info["name"]}', // 分享描述
+	    link: '__SELF__', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+	    imgUrl: '__QINIU_IMG__/{$info["logo"]}', // 分享图标
+	    type: '', // 分享类型,music、video或link，不填默认为link
+	    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+	    success: function () { 
+	        // 用户确认分享后执行的回调函数
+	        add()
+	    }
+	})
+	wx.onMenuShareTimeline({
+	    title: '{$info["name"]}', // 分享标题
+	    link: '__SELF__', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+	    imgUrl: '__QINIU_IMG__/{$info["logo"]}', // 分享图标
+	    success: function () { 
+	        // 用户确认分享后执行的回调函数
+	        add()
+	    }
+	});
+}
+
+function add(){
+	var url = "{:U(share)}",
+		id = "{$info['id']}"
+	$.post(url, {id}, function(json){
+		if (json.status == 0){
+			toast('积分送到', {status: 0})
+		}
+	}, 'json')
+}
+
+</script></block><block name="content"><div> <img src="__QINIU_IMG__/{$info['logo']}" class="corver"/></div><div class="weui-cells"><div class="weui-cell"><div class="weui-cell__bd"><p class="main">{$info['name']}</p><p class="sub">时间：{:timetostr($info['start_time'], 'Y.m.d')} - {:timetostr($info['end_time'], 'Y.m.d')}</p><p class="sub">地址：{$info['address']}</p></div></div></div><div class="weui-cells"><div class="weui-cell"><div class="weui-cell__bd"> {$info['intro']}</div></div></div></block>

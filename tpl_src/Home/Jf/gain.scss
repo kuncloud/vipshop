@@ -1,0 +1,32 @@
+@import "../../Public/css/index.scss";
+
+.weui-media-box__desc{
+	margin-top: pxtrem(16px);
+}
+
+.weui-cell__ft{
+	.finish{
+		color: $lvColorFinish;
+	}
+	.unfinish{
+		border: 1px solid $lvColorHighlightMain;
+		color: $lvColorHighlightMain;
+		padding: pxtrem(6px) pxtrem(8px);
+		border-radius: pxtrem(12px);
+		font-size: $lvFontDefault;
+		width: pxtrem(140px);
+		text-align: center;
+		display: block;
+	}
+	.btn{
+		width: pxtrem(130px);
+		text-align: center;
+		display: block;
+		font-size: $lvFontDefault;
+		color: $lvBtnMainFontColor;
+		background-color: $lvBtnMainBgColor;
+		padding: pxtrem(6px) pxtrem(8px);
+		border: 1px;
+		border-radius: $lvBtnDefaultRadius;
+	}
+}

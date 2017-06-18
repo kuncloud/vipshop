@@ -1,0 +1,30 @@
+@import "../../Public/css/index.scss";
+
+.main{
+	height: 100%;
+	width: 100%;
+	background: url(../../Public/images/Share/back.png) no-repeat center transparent;
+    background-size: cover;
+    margin: 0 auto;
+	padding: $lvMarginBig;
+	
+	.title{
+		text-align: left;
+		width: 100%;
+		max-width: 375px;
+		color: #ffadaa;
+		padding-top: pxtrem(250px);
+		padding-bottom: pxtrem(20px);
+	}
+	
+	.content{
+		img{
+			height: pxtrem(240px);
+			border-radius: $lvBtnDefaultRadius;
+		}
+	}
+}
+
+.rotate .title{
+	padding-top: pxtrem(200px);
+}

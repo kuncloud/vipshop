@@ -1,0 +1,18 @@
+<extend name="Public:base"/><block name="style"></block><block name="js"><script type="text/javascript">
+$(function(){
+});
+
+function listdata(lists){
+	var html = ''
+	for(var i in lists){
+		var item = lists[i]
+		html += '<a href="{:U(\'info\')}/id/'+item.id+'">'
+		html += '<div class="weui-cell" style="height: 200px;">'
+		html += '<img src="__QINIU_IMG__/'+item.logo+'">'
+		html += '</div><div class="weui-cell">'
+		html += '<div class="weui-cell__bd">'+item.name+'</div>'
+		html += '</div></a>'
+	}
+	$('.lists').append(html)
+}
+</script></block><block name="content"><div class="weui-cells"><dropload classname="custom" url="{$url}"/></div><div class="fix-bottom-box"><div class="fix-bottom-item"> <a href="{:U('edit')}" class="weui-btn weui-btn_confirm">增加活动</a></div></div></block>

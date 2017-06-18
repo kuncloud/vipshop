@@ -1,0 +1,34 @@
+@import "../../Public/css/index.scss";
+
+.empty{
+	text-align: center;
+	padding-top: pxtrem(218px);
+	img{
+		height: pxtrem(226px);
+		width: pxtrem(210px);
+	}
+	p{
+		margin-top: pxtrem(68px);
+		color: $lvColorHighlight;
+		font-size: $lvFontHighlight;
+		margin-bottom: pxtrem(40px);
+	}
+}
+
+.weui-cells{
+	.box{
+		flex-direction: column;
+		.weui-cell{
+			width: 100%;
+			&:before{
+				border-top: none;
+			}
+			.msg{
+				color: $lvColorDefaultSub;
+			}
+			.option{
+				color: $lvColorHighlight;
+			}
+		}
+	}
+}

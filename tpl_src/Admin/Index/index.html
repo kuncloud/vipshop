@@ -1,0 +1,106 @@
+<extend name="Public:base" />
+<block name="style">
+</block>
+<block name="js">
+<script type="text/javascript">
+$(function(){
+});
+</script>
+</block>
+<block name="content">
+<div class="weui-cells">
+	<a href="{:U('Ad/index')}" class="weui-cell weui-cell_access">
+		<div class="weui-cell__bd">
+			轮播图设置
+		</div>
+		<div class="weui-cell__ft"></div>
+	</a>
+	<a href="{:U('Activity/index')}" class="weui-cell weui-cell_access">
+		<div class="weui-cell__bd">
+			活动设置
+		</div>
+		<div class="weui-cell__ft"></div>
+	</a>
+	<a href="{:U('Gift/index')}" class="weui-cell weui-cell_access">
+		<div class="weui-cell__bd">
+			礼品设置
+		</div>
+		<div class="weui-cell__ft"></div>
+	</a>
+	<a href="{:U('Giftrecord/index')}" class="weui-cell weui-cell_access">
+		<div class="weui-cell__bd">
+			中奖记录
+		</div>
+		<div class="weui-cell__ft"></div>
+	</a>
+</div>
+<div class="weui-cells">
+	<a href="{:U('Goods/index')}" class="weui-cell weui-cell_access">
+		<div class="weui-cell__bd">
+			商品管理
+		</div>
+		<div class="weui-cell__ft"></div>
+	</a>
+	<a href="{:U('Classify/index')}" class="weui-cell weui-cell_access">
+		<div class="weui-cell__bd">
+			商品类别
+		</div>
+		<div class="weui-cell__ft"></div>
+	</a>
+	<a href="{:U('Standard/index')}" class="weui-cell weui-cell_access">
+		<div class="weui-cell__bd">
+			商品规格
+		</div>
+		<div class="weui-cell__ft"></div>
+	</a>
+</div>
+<div class="weui-cells">
+	<a href="{:U('Order/index')}" class="weui-cell weui-cell_access">
+		<div class="weui-cell__bd">
+			订单管理
+		</div>
+		<div class="weui-cell__ft"></div>
+	</a>
+</div>
+<div class="weui-cells">
+	<a href="{:U('Member/index')}" class="weui-cell weui-cell_access">
+		<div class="weui-cell__bd">
+			会员管理
+		</div>
+		<div class="weui-cell__ft"></div>
+	</a>
+</div>
+<div class="weui-cells">
+	<a href="{:U('Feedback/index')}" class="weui-cell weui-cell_access">
+		<div class="weui-cell__bd">
+			用户反馈
+		</div>
+		<div class="weui-cell__ft"></div>
+	</a>
+</div>
+<div class="weui-cells__title">会员权限管理</div>
+<div class="weui-cells">
+	<a href="{:U('Vip/index')}" class="weui-cell weui-cell_access">
+		<div class="weui-cell__bd">
+			等级积分设置
+		</div>
+		<div class="weui-cell__ft"></div>
+	</a>
+	<a href="{:U('Rights/index')}" class="weui-cell weui-cell_access">
+		<div class="weui-cell__bd">
+			特权设置
+		</div>
+		<div class="weui-cell__ft"></div>
+	</a>
+	<a href="{:U('Config/edit')}" class="weui-cell weui-cell_access">
+		<div class="weui-cell__bd">
+			设置
+		</div>
+		<div class="weui-cell__ft"></div>
+	</a>
+	<a class="weui-cell weui-cell_access" href="javascript:op('退出登录？', '{:U('Public/logout')}', function(){location.href='{:U('Public/login')}'});">
+		<div class="weui-cell__bd">退出登录</div>
+		<div class="weui-cell__ft"></div>
+	</a>
+</div>
+</block>

@@ -1,0 +1,38 @@
+<extend name="Public:base" />
+<block name="style">
+<link rel="stylesheet" href="__ADMIN__/Vip/index.css" />
+</block>
+<block name="js">
+<script>
+$(function(){
+	history.replaceState({},'','{:U("Index/index")}');
+})
+</script>
+</block>
+<block name="content">
+<form action="__SELF__" id="form" method="POST">
+	<input type="hidden" name="id" value="{$info['id']}">
+	<div class="weui-cells weui-cells_form">
+		<div class="weui-cell">
+			<div class="weui-cell__hd">
+				<label class="weui-label">名称</label>
+			</div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" name="name" value="{$info['name']}" required placeholder="最多8个字" >
+			</div>
+		</div>
+		<div class="weui-cell">
+	        <div class="weui-cell__bd">
+	            <textarea class="weui-textarea" name="intro" placeholder="描述" rows="3">{$info['intro']}</textarea>
+	            <div class="weui-textarea-counter">最多100字</div>
+	        </div>
+	    </div>
+	</div>
+	<div class="fix-bottom-box">
+		<div class="fix-bottom-item">
+			<a href="javascript:history.go(-1);" class="weui-btn weui-btn_default">取消</a>
+			<input type="submit" class="weui-btn weui-btn_confirm" value="保存"/>
+		</div>
+	</div>
+</form>
+</block>

@@ -1,0 +1,35 @@
+<extend name="Public:base" />
+<block name="style">
+</block>
+<block name="js">
+<script type="text/javascript">
+$(function(){
+});
+
+function listdata(lists){
+	var html = ''
+	for(var i in lists){
+		var item = lists[i]
+		html += '<div class="weui-cell"><div class="weui-cell__bd">'
+		html += '<p>'+item.title+'</p>'
+		html += '<p style="color: #8f8f8f;">'+item.create_time+'</p>'
+		html += '</div><div class="weui-cell__hd">'+item.jf+'</div></div>'
+	}
+	$('.lists').append(html)
+}
+</script>
+</block>
+<block name="content">
+<div class="weui-cells">
+	<dropload classname="custom" url="{$url}" />
+	<!-- <volist name="lists" id="v">
+		<div class="weui-cell">
+			<div class="weui-cell__bd">
+				<p>{$v['title']}</p>
+				<p style="color: #8f8f8f;">{:timetostr($v['create_time'])}</p>
+			</div>
+			<div class="weui-cell__hd">{$v['jf']}</div>
+		</div>
+	</volist> -->
+</div>
+</block>

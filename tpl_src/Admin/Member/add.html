@@ -1,0 +1,61 @@
+<extend name="Public:base" />
+<block name="style">
+<link rel="stylesheet" href="__ADMIN__/Member/index.css" />
+</block>
+<block name="js">
+<script type="text/javascript">
+$(function(){
+	history.replaceState({},'','{:U("Index/index")}');
+	
+	var json = '{$json}',
+		$jf = $('#jf')
+	json = eval( '('+json+')' )
+	$('#aid').on('change', function(){
+		var val = $(this).val()
+		$jf.attr('max', json[val]['max'])
+		$jf.attr('min', json[val]['min'])
+	}).trigger('change')
+})
+</script>
+</block>
+<block name="content">
+<form action="__SELF__" id="form" method="POST">
+	<input type="hidden" name="uid" value="{:Param('uid')}" />
+	<input type="hidden" name="pid" value="{:UID}" />
+	<div class="weui-cells weui-cells_form">
+		<div class="weui-cell weui-cell_select weui-cell_select-after">
+			<div class="weui-cell__hd">
+				<label class="weui-label">活动</label>
+			</div>
+			<div class="weui-cell__bd weui_cell_primary">
+				<select class="weui_select" id="aid" name="aid">
+					<volist name="lists" id="v">
+						<option value="{$v['id']}">{$v['name']}</option>
+					</volist>
+				</select>
+			</div>
+		</div>
+		<div class="weui-cell">
+			<div class="weui-cell__hd">
+				<label class="weui-label">积分</label>
+			</div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" max="10" min="1" id="jf" name="jf" type="number" pattern="[0-9]*" required emptyTips="请输入积分" />
+			</div>
+		</div>
+		<div class="weui-cell">
+			<div class="weui-cell__hd">
+				<label class="weui-label">说明</label>
+			</div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" name="title" required emptyTips="请输入赠送说明" />
+			</div>
+		</div>
+	</div>
+	<div class="fix-bottom-box">
+		<div class="fix-bottom-item">
+			<input type="submit" class="weui-btn weui-btn_confirm" value="保存"/>
+		</div>
+	</div>
+</form>
+</block>

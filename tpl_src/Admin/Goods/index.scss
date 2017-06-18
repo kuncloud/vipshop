@@ -1,0 +1,81 @@
+@import "../../Public/css/index.scss";
+
+.weui-cells{
+	.select{
+		background-color: #fafafa;
+		text-align: center;
+		.active{
+			color: $lvColorHighlightMain;
+			border-bottom: 1px solid $lvColorHighlightMain;
+			padding-bottom: 11px;
+		}
+	}
+	.weui-media-box__desc{
+		margin-top: 8px;
+	}
+	.num{
+		color: $lvColorHighlightMain;
+		font-size: $lvFontHighlightMain;
+	}
+}
+
+.arrow:after{
+	content: " ";
+    display: inline-block;
+    height: 6px;
+    width: 6px;
+    border-width: 2px 2px 0 0;
+    border-color: #c8c8cd;
+    border-style: solid;
+    -webkit-transform: matrix(.71,.71,-.71,.71,0,0);
+    transform: matrix(.71,.71,-.71,.71,0,0);
+    position: relative;
+    top: -2px;
+    position: absolute;
+    top: 50%;
+    margin-top: -5px;
+    margin-left: 6px;
+	transform: rotate(135deg);
+}
+
+.arrow.show:after{
+    margin-top: -2px;
+	transform: rotate(-45deg);
+}
+
+.option_box{
+	display:inline-block;
+	float: right;
+	height: pxtrem(50px);
+	.options_btn{
+		margin-top: 3px;
+		float: right;
+		height: pxtrem(40px);
+		line-height: pxtrem(20px);
+		font-size: pxtrem(40px);
+		border-radius: pxtrem(36px);
+		width: pxtrem(64px);
+		text-align: center;
+		background-color: $lvColorDefaultBg;
+	}
+	.options_item{
+		padding: $lvMarginSub 0 $lvMarginSub $lvMarginDefault;
+		background: rgba(0, 0, 0, 0.8);
+		a{
+			color: #fff;
+			margin-right: $lvMarginDefault;
+		}
+	}
+}
+
+.slide-down{
+	position: fixed;
+    z-index: 99999;
+	background: rgba(0, 0, 0, 0.6);
+	height: 100%;
+	width: 100%;
+	
+	.weui-cell{
+		background-color: #fff;
+	}
+}

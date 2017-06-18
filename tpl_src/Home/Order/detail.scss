@@ -1,0 +1,67 @@
+@import "../../Public/css/index.scss";
+
+.top{
+	padding: $lvMarginBig;
+	padding-top: pxtrem(40px);
+	padding-bottom: pxtrem(8px);
+	text-align: center;
+	background-color: $lvColorDefaultBg;
+	p{
+		margin-top: $lvMarginDefault;
+		color: $lvColorDefault;
+		font{
+			color: $lvColorHighlight;
+		}
+	}
+}
+.notice{
+	background-color: #ffedd7;
+	img{
+		margin-top: -$lvMarginSub;
+		margin-right: $lvMarginSub;
+	}
+	span{
+		color: $lvColorHighlightMain;
+		font-size: $lvFontHighlightMain;
+	}
+}
+.cancel{
+	div{
+		display: inline-block;
+	}
+	.left{
+		margin-right: -20px;
+		img{
+			height: 18px;
+			width: 18px;
+			margin-bottom: 4px;
+		}
+	}
+	.line{
+		height: 2px;
+		width: 100px;
+		margin-bottom: 38px;
+		background-color: #4cbd4d;
+	}
+	.right{
+		margin-left: -10px;
+		img{
+			height: 30px;
+			width: 30px;
+		}
+	}
+}
+
+.weui-cell__col{
+	color: $lvColorDefault;
+	div{
+		margin-top: $lvMarginDefault;
+	}
+}
+
+.confirm{
+	background-color: #fff;
+	flex: 1;
+	text-align: right;
+	padding: $lvMarginDefault * 2;
+}

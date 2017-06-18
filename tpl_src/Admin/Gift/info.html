@@ -1,0 +1,27 @@
+<extend name="Public:base" />
+<block name="style">
+<link rel="stylesheet" href="__ADMIN__/Gift/index.css" />
+</block>
+<block name="content">
+<div class="weui-cells">
+	<volist name="lists" id="v">
+		<div class="weui-media-box weui-media-box_appmsg jump_url" data-url="{:U('edit', 'pid='.$v['pid'].'&id='.$v['id'])}">
+			<div class="weui-media-box__hd">
+				<img src="__QINIU_IMG__/{$v['corver']}">
+			</div>
+			<div class="weui-media-box__bd">
+				<div class="weui-media-box__title">{$v['name']}</div>
+				<div class="weui-media-box__desc">库存：{$v['stock']} 销量：{$v['sales']}</div>
+				<div class="weui-media-box__desc">¥ {$v['price']}</div>
+				<div class="weui-media-box__desc num">概率 {$v['rate']}%</div>
+			</div>
+		</div>
+	</volist>
+</div>
+<div class="fix-bottom-box">
+	<div class="fix-bottom-item">
+		<a href="{:U('index')}" class="weui-btn weui-btn_default">返回</a>
+		<a href="{:U('edit', 'pid='.Param('pid'))}" class="weui-btn weui-btn_confirm">增加礼品</a>
+	</div>
+</div>
+</block>

@@ -1,0 +1,185 @@
+<extend name="Public:base" />
+<block name="style">
+<link rel="stylesheet" href="__HOME__/Index/index.css" />
+</block>
+<block name="js">
+</block>
+<block name="content">
+<div class="weui-cells first">
+	<div class="weui-cell jf-top">
+		<div class="weui-cell__hd">
+			<a href="{:U('Record/index')}">
+				<img src="__PUBLIC_IMAGES__/Index/jf_orange.png" class="img-jf">
+			</a>
+		</div>
+		<div class="weui-cell__bd">
+			<a href="{:U('Record/index')}">积分 <span style="color: #FD6508;">{$info['jf']}</span></a>
+		</div>
+		<div class="weui-cell__ft avatar">
+			<a href="{:U('User/index')}">
+				<if condition="$info['avatar']">
+					<img src="{$info['avatar']}" class="img-min">
+				<else/>
+					<img src="__PUBLIC_IMAGES__/Index/user_default_icon.png" class="img-min">
+				</if>
+			</a>
+		</div>
+	</div>
+	<if condition="$data">
+		<slider data="{$data}" intval="3000" classname="index-slider" />
+	<else/>
+		<div class='slide'>
+			<div class='slidecontent'>
+    				<img src='__PUBLIC_IMAGES__/banner.jpeg'>
+    			</div>
+    		</div>
+	</if>
+	<div class="weui-cell jf-second">
+		<div class="weui-cell__bd">
+			<a href="{:U('Jf/gain')}">
+				<div class="weui-cell">
+					<div class="weui-cell__hd">
+						<img src="__PUBLIC_IMAGES__/Index/jf_gain.png">
+					</div>
+					<div class="weui-cell__bd">
+						<p>赚积分</p>
+						<p class="detail">手指点点很轻松</p>
+					</div>
+				</div>
+			</a>
+		</div>
+		<div class="weui-cell__bd">
+			<a href="{:U('Jf/expend')}">
+				<div class="weui-cell">
+					<div class="weui-cell__hd">
+						<img src="__PUBLIC_IMAGES__/Index/jf_expend.png">
+					</div>
+					<div class="weui-cell__bd">
+						<p>花积分</p>
+						<p class="detail">更多奖品等你兑</p>
+					</div>
+				</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="weui-cells jfhd">
+	<div class="weui-cell">
+		<div class="weui-cell__bd jump_url" data-url="{:U('Share/index')}">
+			<p class="title">分享有礼</p>
+			<p class="desc" style="color: #E3A109">分享喜悦拿奖品</p>
+			<img src="__PUBLIC_IMAGES__/Index/share.png" class="">
+		</div>
+		<div class="weui-cell__bd jump_url" data-url="{:U('Red/index')}" style="border-right: 1px solid #e5e5e5; border-left: 1px solid #e5e5e5;">
+			<p class="title">抢红包</p>
+			<p class="desc" style="color: #FA610B">现金红包拿不停</p>
+			<img src="__PUBLIC_IMAGES__/Index/red.png" class="">
+		</div>
+		<div class="weui-cell__bd jump_url" data-url="{:U('Punch/index')}">
+			<p class="title">打卡</p>
+			<p class="desc" style="color: #FF3C3A">每天打卡领红包</p>
+			<img src="__PUBLIC_IMAGES__/Index/punch.png" class="">
+		</div>
+	</div>
+</div>
+<div class="weui-cells dg">
+	<div class="weui-media-box weui-media-box_appmsg">
+		<div class="weui-media-box__hd_cus">
+			<img src="__PUBLIC_IMAGES__/Index/kf.png">
+		</div>
+		<div class="weui-media-box__bd">
+			<p class="weui-media-box__title">专属导购</p>
+			<p class="weui-media-box__desc">1v1为你专属推荐</p>
+		</div>
+		<div class="weui-cell__ft">
+			<img class="zsdg" data-kf="{:get_config(CONFIG_KF)['val']}" data-phone="{$info['phone']}" src="__PUBLIC_IMAGES__/Index/phone.png" />
+		</div>
+	</div>
+</div>
+<div class="weui-cells product">
+	<div class="weui-cell top weui-cell_access">
+		<div class="weui-cell__hd">
+		</div>
+		<div class="weui-cell__bd">
+			<img src="__PUBLIC_IMAGES__/Index/vip.png" />
+			<span>会员专享</span>
+		</div>
+		<div class="weui-cell__ft">
+			<a class="more" href="{:U('czd')}">更多</a>
+		</div>
+	</div>
+	<volist name="rec" id="v">
+		<if condition="$i%2 eq 1">
+			<div class="weui-cell list">
+			<a class="weui-cell__bd" href="{:U('Goods/info', 'id='.$v['id'])}">
+		<else/>
+			<a class="weui-cell__bd second" href="{:U('Goods/info', 'id='.$v['id'])}">
+		</if>
+				<div>
+					<img src="{$v['corver']}">
+				</div>
+				<div class="name">{$v['name']}</div>
+				<div class='detail'>{$v['detail']} 剩余 <font>{$v['remain']}</font> 份</div>
+				<div class="price">
+					<if condition="$v['jf']">
+						{$v['jf']}积分
+						<if condition="$v['price']">
+							 &nbsp;+&nbsp;
+						</if>
+					</if>
+					<if condition="$v['price']">
+						¥{$v['price']}
+					</if>
+				</div>
+			</a>
+		<if condition="$i%2 eq 0">
+			</div>
+		</if>
+	</volist>
+	<if condition="$i%2 eq 1">
+		</div>
+	</if>
+</div>
+<div class="weui-cells product">
+	<div class="weui-cell top weui-cell_access">
+		<div class="weui-cell__hd">
+		</div>
+		<div class="weui-cell__bd">
+			<img src="__PUBLIC_IMAGES__/Index/xin.png" />
+			<span>为你优选</span>
+		</div>
+		<div class="weui-cell__ft">
+			<a class="more" href="{:U('czd')}">更多</a>
+		</div>
+	</div>
+	<volist name="hot" id="v">
+		<if condition="$i%2 eq 1">
+			<div class="weui-cell list">
+			<a class="weui-cell__bd" href="{:U('Goods/info', 'id='.$v['id'])}">
+		<else/>
+			<a class="weui-cell__bd second" href="{:U('Goods/info', 'id='.$v['id'])}">
+		</if>
+				<div>
+					<img src="{$v['corver']}">
+				</div>
+				<div class="name">{$v['name']}</div>
+				<div class="price">
+					<if condition="$v['jf']">
+						{$v['jf']}积分
+						<if condition="$v['price']">
+							 &nbsp;+&nbsp;
+						</if>
+					</if>
+					<if condition="$v['price']">
+						¥{$v['price']}
+					</if>
+				</div>
+				<div class='detail'>{$v['detail']} 剩余 <font>{$v['remain']}</font> 份</div>
+			</a>
+		<if condition="$i%2 eq 0">
+			</div>
+		</if>
+	</volist>
+	<!-- <dropload classname="custom" url="{:U('load_goods')}" /> -->
+</div>
+</block>

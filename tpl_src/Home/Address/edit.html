@@ -1,0 +1,86 @@
+<extend name="Public:base" />
+<block name="style">
+<link rel="stylesheet" href="__HOME__/Address/edit.css" />
+</block>
+<block name="js">
+<script>
+var province, city, district
+$(function(){
+	history.replaceState({},'','{:U("User/index")}');
+	
+	province = "{$info['province']}" || "{$default['val'][0]}"
+		city = "{$info['city']}" || "{$default['val'][1]}"
+	district = "{$info['district']}" || "{$default['val'][2]}"
+	
+	/* var oid = '{:Param("oid")}'
+	if (oid){
+		history.replaceState({},'','{:U("User/index")}');
+	} */
+})
+</script>
+</block>
+<block name="content">
+<form id="form" action="__SELF__" method="POST">
+	<input type="hidden" name="id" value="{$info['id']}" />
+	<div class="weui-cells weui-cells_form">
+		<div class="weui-cell">
+			<div class="weui-cell__hd">
+				<label class="weui-label">收货人</label>
+			</div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" name="username" value="{$info['username']}" required placeholder="请输入收货人">
+			</div>
+		</div>
+		<div class="weui-cell">
+			<div class="weui-cell__hd">
+				<label class="weui-label">联系电话</label>
+			</div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" type="number" pattern="[0-9]*" name="phone" value="{$info['phone']}" required placeholder="请输入联系电话">
+			</div>
+		</div>
+		<div class="weui-cell weui-cell_select weui-cell_select-after">
+			<div class="weui-cell__hd">
+				<label class="weui-label">收货时间</label>
+			</div>
+			<div class="weui-cell__bd weui_cell_primary">
+				<select class="weui_select" name="on_time">
+					<option value="周一至周五" <eq name="info['on_time']" value="周一至周五">selected</eq>>周一至周五</option>
+					<option value="周末" <eq name="info['on_time']" value="周末">selected</eq>>周末</option>
+					<option value="不限制" <eq name="info['on_time']" value="不限制">selected</eq>>不限制</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class="weui-cells weui-cells_form">
+		<div class="weui-cell weui-cell_select weui-cell_select-after">
+			<div class="weui-cell__hd">
+				<label class="weui-label">所在地区</label>
+			</div>
+			<div id="distpicker" class="weui-cell__bd weui_cell_primary">
+				<select class="weui_select" data-province="省份" name="province"></select>
+				<select class="weui_select" data-city="城市" name="city"></select>
+				<select class="weui_select" data-district="行政区" name="district"></select>
+			</div>
+		</div>
+		<div class="weui-cell">
+			<div class="weui-cell__hd">
+				<label class="weui-label">详细地址</label>
+			</div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" name="detail" value="{$info['detail']}" required placeholder="请输入详细地址" />
+			</div>
+		</div>
+	</div>
+	<div class="weui-cells weui-cells_form">
+		<div class="weui-cell">
+			<div class="weui-cell__bd">
+				<a href="javascript:op('确认删除', '{:U('del', 'id='.$info['id'])}', function(){location.href='{:U('index')}'});" style="color: #f41e2d;">删除地址</a>
+			</div>
+		</div>
+	</div>
+	<div class="bottom-box">
+		<input type="submit" class="weui-btn weui-btn__confirm" value="保存" />
+	</div>
+</form>
+</block>

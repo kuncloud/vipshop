@@ -1,0 +1,181 @@
+<extend name="Public:base" />
+<block name="style">
+<link rel="stylesheet" href="__HOME__/Order/confirm.css" />
+</block>
+<block name="js">
+<wxjs />
+<script type="text/javascript" src="__PUBLIC__/statics/js/wx.js"></script>
+<script>
+$(function(){
+	history.replaceState({},'','{:U("Order/index")}');
+	
+	var address = "{$address}"
+	if (!address){
+		tips()
+	}
+	
+	$('[name="type"]').on('change', function(){
+		if ($(this).val() == 1){
+			$('.store_box').removeClass('hidden')
+		} else {
+			$('.store_box').addClass('hidden')
+		}
+	})
+	
+	wx.config({
+	    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+	    appId: '{$sign["appId"]}', // 必填，公众号的唯一标识
+	    timestamp: '{$sign["timestamp"]}', // 必填，生成签名的时间戳
+	    nonceStr: '{$sign["nonceStr"]}', // 必填，生成签名的随机串
+	    signature: '{$sign["signature"]}',// 必填，签名，见附录1
+	    jsApiList: ['chooseWXPay'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+	});
+})
+
+function tips(){
+	weui.dialog({
+		content: '您还没有添加收货地址，要店家收货地址才能派送哟~',
+		className: 'weui-dialog__custom',
+		buttons: [
+			{
+				label: '取消',
+				type: 'default'
+			},
+			{
+				label: '立即添加',
+				type: 'primary',
+				onClick: function(){
+					location.href = "{:U('Address/edit', 'oid='.$info['id'])}"
+				}
+			}
+		]
+	})
+}
+
+function confirm(){
+	var aid = "{$aid}"
+	if (aid){
+		var url = '{:U("setAdd")}',
+			id = '{$info["id"]}',
+			data = {}
+			
+		if ( $('.store_box').hasClass('hidden') ){
+			data = {aid, id}
+		} else {
+			var $option = $("[name='store']").find(":selected"),
+				address = $option.data('add'),
+				sid = $option.val(),
+				name = $option.data('name')
+			data = {id, address, sid, name}
+		}
+		$.post(url, data, function(json){
+			if (json.url){
+				location.href = json.url
+			} else {
+				pay('{:U("wpay")}', id)
+			}
+			//if (json.status == 0){
+				//location.href = json.url
+			//}
+		}, 'json')
+	} else {
+		toast('请设置收货地址', {status: 1})
+	}
+}
+
+function payed(id){
+	var url = '{:U("payed")}'
+	$.post(url, {id}, function(json){
+		if (json.status == 0){
+			location.href = json.url
+		}
+	}, 'json')
+}
+</script>
+</block>
+<block name="content">
+<div class="weui-cells first">
+	<if condition="$aid">
+		<a href="{:U('Address/index', 'oid='.$info['id'])}" class="weui-cell weui-cell_access">
+			<div class="weui-cell__bd">
+				<p>{$address['username']} {$address['phone']}</p>
+				<p>收货地址：{$address['province']}{$address['city']}{$address['district']}{$address['detail']}</p>
+				<p>{$address['on_time']}</p>
+			</div>
+			<div class="weui-cell__ft"></div>
+		</a>
+	<else/>
+		<a href="{:U('Address/edit', 'oid='.$info['id'])}" class="weui-cell weui-cell_access none">
+			<div class="weui-cell__bd">
+				<p style="margin: 0;">您还未添加收货地址，请先添加收货地址</p>
+			</div>
+			<div class="weui-cell__ft"></div>
+		</a>
+	</if>
+</div>
+<div class="weui-cells weui-cells_checkbox">
+	<div class="weui-cell">
+		<div class="weui-cell__bd money">
+			<p class="main">应付金额： ¥<span>{$info['total']+$fare['val']}</span></p>
+			<p class="sub">含运费： ¥{$fare['val']}</p>
+		</div>
+	</div>
+	<!-- <label class="weui-cell weui-check__label">
+		<div class="weui-cell__hd">
+			<input type="checkbox" class="weui-check" />
+			<i class="weui-icon-checked"></i>
+		</div>
+		<div class="weui-cell__bd">
+			<p>可用20积分抵扣</p>
+		</div>
+		<div class="weui-cell__ft">
+			¥{$scale*20}
+		</div>
+	</label> -->
+</div>
+<div class="weui-cells weui-cells_checkbox">
+	<label class="weui-cell weui-check__label">
+		<div class="weui-cell__hd">
+			<input type="radio" name="type" value="0" class="weui-check" checked />
+			<i class="weui-icon-checked"></i>
+		</div>
+		<div class="weui-cell__bd">
+			<p>
+				<img src="__PUBLIC_IMAGES__/Order/wei.png" class="img-min-x">
+				<span>微信支付</span>
+			</p>
+		</div>
+	</label>
+	<label class="weui-cell weui-check__label">
+		<div class="weui-cell__hd">
+			<input type="radio" name="type" value="1" class="weui-check" />
+			<i class="weui-icon-checked"></i>
+		</div>
+		<div class="weui-cell__bd">
+			<p>
+				<img src="__PUBLIC_IMAGES__/Order/pay.png" class="img-min-x">
+				<span>门店自提</span>
+			</p>
+		</div>
+	</label>
+</div>
+<div class="weui-cells weui-cells_select store_box hidden">
+	<div class="weui-cell weui-cell_select weui-cell_select-after">
+		<div class="weui-cell__hd">
+			<label class="weui-label">选择门店</label>
+		</div>
+		<div class="weui-cell__bd weui_cell_primary">
+			<select class="weui_select" name="store" id="store">
+				<volist name="stores" id="v">
+					<option value="{$v['id']}" data-name="{$v['name']}" data-add="{$v['province']}{$v['city']}{$v['area']}{$v['address']}">{$v['name']}</option>
+				</volist>
+			</select>
+		</div>
+	</div>
+</div>
+<div class="fix-bottom-box">
+	<div class="fix-bottom-item">
+		<a href="javascript:confirm();" class="weui-btn weui-btn_confirm">提交订单</a>
+	</div>
+</div>
+</block>

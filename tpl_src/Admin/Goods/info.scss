@@ -1,0 +1,151 @@
+@import "../../Public/css/index.scss";
+.index-slider{
+	//height: pxtrem(297px) !important;
+	img{
+	//	height: pxtrem(297px) !important;
+	}
+	#slideposition{
+		text-align: center;
+    		width: 100%;
+		right: 0 !important;
+		bottom: 16px !important;
+		ul{
+			.indicator{
+				background: #fff !important;
+				border: 0.5px solid #000;
+				height: pxtrem(15px) !important;
+				width: pxtrem(15px) !important;
+				margin-left: 6px !important;
+				margin-right: 6px !important;
+			}
+			.indicator.active{
+				background: #000 !important;
+			}
+		}
+	}
+}
+
+.first{
+	font-size: $lvFontDefaultSub;
+	.main{
+		color: $lvColorHighlightMain;
+		font-size: $lvFontHighlightMain;
+	}
+	.phraise{
+		margin-right: pxtrem(20px);
+	}
+}
+
+.img_detail{
+	height: pxtrem(101px);
+    width: pxtrem(101px);
+    background-color: #8f9194;
+    border-radius: 100%;
+    white-space: nowrap;
+	word-wrap: break-word;
+    text-overflow: ellipsis;
+	text-align: center;
+	padding-top: 12px;
+	font-size: pxtrem(24px);
+	color: #fefefe;
+	position: fixed;
+    top: 210px;
+    right: 12px;
+	opacity: 0.9;
+	z-index: 999999;
+	p{
+		margin-top: -3px;
+	}
+}
+
+.product{
+	font-size: $lvFontDefaultSub;
+	.weui-cell__hd label{
+		width: pxtrem(80px);
+	}
+	.standard_parent{
+		display: flex;
+		flex-direction: column;
+	}
+	.standard{
+		border: 1px solid $lvColorDefaultLine;
+		padding: $lvMarginSub $lvMarginDefault;
+		margin: $lvMarginDefault;
+		flex: 1;
+	}
+	.active{
+		border: 1px solid $lvColorHighlightMain;
+		color: $lvColorHighlightMain;
+	}
+	.weui-cell__bd{
+		a{
+			float: left;
+			border: 1px solid $lvColorDefaultLine;
+			padding: 0 $lvMarginDefault;
+			height: pxtrem(58px);
+			font-size: pxtrem(34px);
+		}
+		.count{
+			float: left;
+			height: pxtrem(58px);
+			line-height: pxtrem(58px);
+			text-align: center;
+			border: 1px solid $lvColorDefaultLine;
+			width: pxtrem(60px);
+		}
+		.decr{
+			color: $lvColorDefaultLine;
+			border-right: none;
+		}
+		.incr{
+			border-left: none;
+		}
+	}
+}
+.detail_title{
+	text-align: center;
+	padding-top: pxtrem(50px);
+	div{
+		display: inline-block;
+	}
+	.detail{
+		margin-left: pxtrem(20px);
+		margin-right: pxtrem(20px);
+	}
+	.line{
+		height: 1px;
+		width: pxtrem(46px);
+		background-color: $lvColorDefaultLine;
+	    margin-bottom: 5px;
+	}
+}
+
+.weui-cells__title{
+	text-align: center;
+	color: $lvColorDefault;
+}
+.car_count{
+	position: absolute;
+    margin-top: -65px;
+    margin-left: 15px;
+	background-color: red;
+	color: #fff;
+	height: 20px;
+	width: 20px;
+	line-height: 20px;
+	font-size: 14px;
+	border-radius: 100%;
+}
+.weui-btn{
+	img{
+		margin-top: $lvMarginDefault;
+	}
+	p{
+		margin-top: - (pxtrem(28px));
+		font-size: $lvFontDefaultSub;
+		color: $lvColorDefault;
+	}
+}
+.weui-btn_default{
+	max-width: pxtrem(240px);
+}

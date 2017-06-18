@@ -1,0 +1,25 @@
+<extend name="Public:base" />
+<block name="style">
+<link rel="stylesheet" href="__ADMIN__/Gift/index.css" />
+</block>
+<block name="content">
+<div class="weui-cells">
+	<volist name="lists" id="v">
+		<a href="{:U('info', 'pid='.$v['id'])}" class="weui-media-box weui-media-box_appmsg weui-cell_access">
+			<div class="weui-media-box__hd">
+				<!-- <img src="__PUBLIC_IMAGES__/Red/close.png"> -->
+				<img src="{$v['logo']}">
+			</div>
+			<div class="weui-media-box__bd">
+				<div class="weui-media-box__title">{$v['name']}</div>
+			</div>
+			<div class="weui-cell__ft"></div>
+		</a>
+	</volist>
+</div>
+<div class="fix-bottom-box">
+	<div class="fix-bottom-item">
+		<a href="{:U('add')}" class="weui-btn weui-btn_confirm">增加礼品池</a>
+	</div>
+</div>
+</block>

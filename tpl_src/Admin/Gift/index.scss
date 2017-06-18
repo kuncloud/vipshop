@@ -1,0 +1,13 @@
+@import "../../Public/css/index.scss";
+
+.weui-cells{
+	.weui-media-box__bd{
+		.weui-media-box__desc{
+			margin-top: $lvMarginSub/2;
+		}
+		.num{
+			color: $lvColorHighlightMain;
+			font-size: $lvFontDefault;
+		}
+	}
+}

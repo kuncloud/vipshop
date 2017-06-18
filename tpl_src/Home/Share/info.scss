@@ -1,0 +1,16 @@
+@import "../../Public/css/index.scss";
+
+.weui-cells{
+	.main{
+		font-size: $lvFontHighlight;
+	}
+	.sub{
+		margin-top: $lvMarginDefault;
+		color: $lvColorDefault;
+		font-size: $lvFontDefault;
+	}
+}
+
+.corver{
+	height: pxtrem(320px);
+}

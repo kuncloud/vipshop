@@ -1,0 +1,60 @@
+@import "../../Public/css/index.scss";
+
+.product{
+	.weui-cell{
+		&:before, &:after{
+			border-top: none;
+			border-bottom: none;
+		}
+	}
+	.top{
+		padding-top: pxtrem(36px);
+		padding-bottom: pxtrem(26px);
+		text-align: center;
+		.zsdg{
+			height: $lvFontHighlightMain;
+			width:auto;
+		}
+		.best{
+			height: $lvFontHighlightMain;
+			width:auto;
+		}
+		.more{
+			height: $lvFontHighlightMain;
+			line-height: pxtrem(34px);
+			color: $lvColorDefault;
+		}
+	}
+	.list{
+		.weui-cell__bd{
+			border: 1px solid $lvColorDefaultLine;
+		}
+		.second{
+			margin-left: 10px;
+		}
+		img{
+			height: pxtrem(280px);
+			width: 100%;
+		}
+		.weui-cell__bd{
+			.name{
+				padding: $lvMarginSub 0 0 $lvMarginDefault;
+				font-size: $lvFontDefault;
+				color: $lvColorHighlight;
+			}
+			.price{
+				padding: $lvMarginSub 0 0 $lvMarginDefault;
+				font-size: $lvFontDefault;
+				color: $lvBtnMainBgActiveColor;
+			}
+			.detail{
+				padding: $lvMarginSub 0 $lvMarginDefault $lvMarginDefault;
+				font-size: $lvFontDefaultSub;
+				color: $lvColorDefaultSub;
+				font{
+					color: $lvColorHighlight;
+				}
+			}
+		}
+	}
+}

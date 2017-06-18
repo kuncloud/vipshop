@@ -1,0 +1,24 @@
+@import "../../Public/css/index.scss";
+
+.weui-cells{
+	.weui-input, .weui-select{
+		text-align: right;
+	}
+	
+	.weui-cell__bd-custom{
+		display: flex;
+		.weui-input_custom{
+			text-align: left;
+			height: pxtrem(80px);
+			width: pxtrem(120px);
+			border: 1px solid $lvColorDefaultLine;
+		}
+		.line{
+			height: 1px;
+			width: 32px;
+			margin: pxtrem(39px) pxtrem(28px) 0 pxtrem(28px);
+			background-color: $lvColorDefaultLine;
+		}
+	}
+	
+}

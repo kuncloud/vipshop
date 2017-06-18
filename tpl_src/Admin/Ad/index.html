@@ -1,0 +1,23 @@
+<extend name="Public:base" />
+<block name="style">
+</block>
+<block name="js">
+<script type="text/javascript">
+$(function(){
+})
+</script>
+</block>
+<block name="content">
+<div style="padding: 0 10px;">
+	<volist name="lists" id="v">
+		<a href="{:U('edit', 'id='.$v['id'])}">
+			<img src="__QINIU_IMG__/{$v['corver']}" style="margin-top: 10px; height: 200px;">
+		</a>
+	</volist>
+</div>
+<div class="fix-bottom-box">
+	<div class="fix-bottom-item">
+		<a href="{:U('edit')}" class="weui-btn weui-btn_confirm">添加</a>
+	</div>
+</div>
+</block>

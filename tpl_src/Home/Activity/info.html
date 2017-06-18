@@ -1,0 +1,25 @@
+<extend name="Public:base" />
+<block name="style">
+<link rel="stylesheet" href="__HOME__/Activity/info.css" />
+</block>
+<block name="content">
+<div>
+	<img src="__QINIU_IMG__/{$info['logo']}" class="corver" />
+</div>
+<div class="weui-cells">
+	<div class="weui-cell">
+		<div class="weui-cell__bd">
+			<p class="main">{$info['name']}</p>
+			<p class="sub">时间：{:timetostr($info['start_time'], 'Y.m.d')} - {:timetostr($info['end_time'], 'Y.m.d')}</p>
+			<p class="sub">地址：{$info['address']}</p>
+		</div>
+	</div>
+</div>
+<div class="weui-cells">
+	<div class="weui-cell">
+		<div class="weui-cell__bd">
+			{$info['intro']}
+		</div>
+	</div>
+</div>
+</block>

@@ -1,0 +1,7 @@
+<extend name="Public:base"/><block name="style"><link rel="stylesheet" href="__HOME__/Punch/index.css"/></block><block name="js"><script>
+$(function(){
+	$('.duihuan').on('click', function(){
+		location.href = "{:U('Jf/expend')}"
+	})
+})
+</script></block><block name="content"><div class="main"><div class="circle"><div class="circle_sub"><div class="day"><p class="p">连续打卡</p><div class="count"><font>{$day|default=0}</font>天</div></div></div></div><div class="duihuan"> <span>{$jf}</span> <span style="float: right;">兑换</span></div><div style="text-align: center; color: #fff; margin-bottom: 30px;">连续打卡{$config['val'][1]}日，积分翻{$config['val'][2]}倍</div><div class="box"><div class="num"><for start="1" end="$config['val'][1]"><div>+{$config['val'][0]}</div></for><div class="mult">x{$config['val'][2]}</div></div><div class="line"><for start="1" end="$config['val'][1]"><if condition="$i lt $config['val'][1]"><if condition="$day gt $i"><div class="active"><div></div></div></if><if condition="$day eq $i"><div class="finish"><div></div></div></if><if condition="$day lt $i"><div class="default"><div></div></div></if><else/></if></for></div><div class="day"><for start="1" end="$config['val'][1]+1"><div>{$i}天</div></for></div></div><div class="bottom"><div class="top"><div class="line"></div> 打卡规则<div class="line"></div></div><div class="content"> {$config['val'][3]}</div></div></div></block>

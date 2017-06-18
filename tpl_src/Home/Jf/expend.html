@@ -1,0 +1,38 @@
+<extend name="Public:base" />
+<block name="style">
+<link rel="stylesheet" href="__HOME__/Jf/expend.css" />
+</block>
+<block name="js">
+<script>
+$(function(){
+})
+</script>
+</block>
+<block name="content">
+<div class="weui-cells first">
+	<div class="weui-media-box weui-media-box_appmsg">
+		<div class="weui-media-box__hd" style="width: auto; height: 50px;">
+			<img src="__PUBLIC_IMAGES__/Jf/jf.png" class="img-min" />
+		</div>
+		<div class="weui-media-box__bd">
+			<h4 class="weui-media-box__title">我的积分: {$info['jf']}</h4>
+			<p class="weui-media-box__desc">积分可以兑换超值奖品哟~</p>
+		</div>
+		<div class="weui-cell__ft">
+			<a href="{:U('Jf/gain')}" class="btn_default">赚积分</a>
+			<a href="{:U('Order/index')}" class="btn_primary">兑换记录</a>
+		</div>
+	</div>
+</div>
+<div class="weui-cells product">
+	<div class="weui-cell top">
+		<div class="weui-cell__bd" style="text-align: left;">
+			<img src="__PUBLIC_IMAGES__/best.png" class="best">
+		</div>
+		<div class="weui-cell__ft">
+			<span class="zsdg" data-kf="{:get_config(CONFIG_KF)['val']}" data-phone="{$info['phone']}">我的客服</span>
+		</div>
+	</div>
+	<dropload classname="custom" url="load_goods" />
+</div>
+</block>
