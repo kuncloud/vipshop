@@ -1,10 +1,6 @@
 <extend name="Public:base"/><block name="style"><link rel="stylesheet" href="__ADMIN__/Order/index.css"/></block><block name="js"><script type="text/javascript" class="searchbar js_show">
 $(function(){
 	history.replaceState({},'','{:U("Index/index")}')
-	init()
-});
-
-function init(){
 	$('body').on('click', function(){
 		$('.more').fadeOut()
 		$('.options_item').fadeOut()
@@ -17,9 +13,12 @@ function init(){
 		$(this).toggleClass('show')
 		return false;
 	})
-	
+	init()
+});
+
+function init(){
 	// 操作
-	$('.options_btn').on('click', function(){
+	$('.options_btn').unbind().on('click', function(){
 		$('.more').fadeOut()
 		$('.show_more').removeClass('show')
 		$(this).siblings('.options_item').fadeToggle()
@@ -70,14 +69,18 @@ function listdata(lists){
 			}
 		}
 		html += '</div>'
-		if (item.status != 'cancel'){
+		if (/* item.status != 'cancel' && */item.status != 'ok'){
 			html += '<div class="weui-cell"><div class="weui-cell__bd"></div><div class="weui-cell__ft"><div class="option_box"><div class="options_item tooltip left" style="display: none;"><div class="tooltip-arrow"></div>'
 			switch (item.status){
 				case 'send':
 					html += '<a href="javascript:;" class="ado" data-title="确认发货？" data-url="{:U(\'status\')}/s/sending/id/'+item.id+'">发货</a>'
 					break;
+				case 'cancel':
+				case 'wait':
+					html += '<a href="javascript:;" class="ado" data-title="确认删除？" data-url="{:U(\'del\')}/id/'+item.id+'">删除</a>'
+					break;
 			}
-			html += '<a href="javascript:;" class="ado" data-title="确认取消？" data-url="{:U(\'status\')}/s/cancel/id/'+item.id+'">取消</a>'
+			//html += '<a href="javascript:;" class="ado" data-title="确认取消？" data-url="{:U(\'status\')}/s/cancel/id/'+item.id+'">取消</a>'
 			html += '</div><div class="options_btn">...</div></div></div></div>'
 		}
 		html += '</div>'

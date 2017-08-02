@@ -52,7 +52,7 @@ class PublicController extends Controller{
 		if (IS_POST){
 			$model = D('Member');
 			$res = $model->reg();
-			echo json_encode(array('status'=>$res, 'msg'=>$model->getError(), 'url'=>U('login', 'cid='.Param('cid'))));die;
+			echo json_encode(array('status'=>$res>0 ? 0 : -1, 'msg'=>$model->getError(), 'url'=>U('login', 'cid='.Param('cid'))));die;
 		} else{
 			if ($openid = session('openid')){
 				$wxLogic = new WxLogic();

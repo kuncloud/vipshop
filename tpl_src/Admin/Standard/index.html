@@ -42,7 +42,9 @@ function edit(pid, pname, id, name){
 <div class="weui-cells">
 	<volist name="lists" id="v">
 		<div class="weui-cell">
-			<div class="weui-cell__hd">{$v['name']}</div>
+			<div class="weui-cell__hd">
+				<a href="javascript:edit(0, '', '{$v['id']}', '{$v['name']}');">{$v['name']}</a>
+			</div>
 			<div class="weui-cell__bd standard">
 				<volist name="v['_data']" id="val">
 					<a href="javascript:edit({$v['id']}, '{$v['name']}', {$val['id']}, '{$val['name']}');">{$val['name']}</a>

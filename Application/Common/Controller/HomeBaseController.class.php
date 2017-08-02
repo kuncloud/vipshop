@@ -18,23 +18,30 @@ class HomeBaseController extends BaseController{
 	public function checkUser(){
 		$uid = session('uid');
 		if ($cid = Param('cid')) session('cid', $cid);
-		if (!$uid){
-			$openid = Param('openid');
-			if ($openid){
-				session('openid', $openid);
-				$info = M('Member')->where(array('openid'=>$openid))->find();
-				if ($info){
-					$uid = $info['id'];
-					session('uid', $uid);
-					session('openid', $info['openid']);
-					session('cid', $info['cid']);
-				}
+		// 有传openid，表示微信登录，直接获取用户信息
+		$openid = Param('openid');
+		if ($openid){
+			session('openid', $openid);
+			$info = M('Member')->where(array('openid'=>$openid))->find();
+			if ($info){
+				$uid = $info['id'];
+				session('uid', $uid);
+				session('openid', $info['openid']);
+				session('cid', $info['cid']);
 			}
 		}
+		
 		if ($uid){
-	    		define('UID', $uid);
-	    		define('CID', session('cid'));
-	    		define('OPENID', session('openid'));
+			// 防止同一个用户进入两个商城时session冲突
+			$cid = session('cid');
+			if (M('Member')->where(array('cid'=>$cid, 'id'=>$uid))->find()) {
+		    		define('UID', $uid);
+		    		define('CID', $cid);
+		    		define('OPENID', session('openid'));
+			} else {
+				session('uid', null);
+				redirect(U('Public/login', 'cid='.Param('cid')));
+			}
 		} else {
 			redirect(U('Public/login', 'cid='.Param('cid')));
 		}
@@ -113,6 +120,7 @@ class HomeBaseController extends BaseController{
 				'confirm'=>'确认订单',
 				'detail'=>'订单详情',
 				'index'=>'我的订单',
+				'wpay'=>'微信支付'
 			),
 			'Punch'=>array(
 				'index'=>'打卡',

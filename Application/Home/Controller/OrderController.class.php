@@ -42,6 +42,7 @@ class OrderController extends HomeBaseController {
 		$where['uid'] = UID;
 		$st and $where['status'] = $st;
 		$extend['where'] = $where;
+		$extend['order'] = 'create_time desc';
 		parent::lists($this->model, true, $extend);
 	}
 	
@@ -89,8 +90,9 @@ class OrderController extends HomeBaseController {
 	public function ok(){
 		$id = Param('id');
 		$model = D($this->model);
-		$r = $model->where(array('id'=>$id))->setField('status', 'ok');
-		echo json_encode(array('status'=>$r ? 0 : -1, 'msg'=>$model->getError()));die;
+// 		$r = $model->where(array('id'=>$id))->setField('status', 'ok');
+		$r = $model->setStatus($id, 'ok');
+		echo json_encode(array('status'=>$r, 'msg'=>$model->getError()));die;
 	}
 	
 	public function status(){

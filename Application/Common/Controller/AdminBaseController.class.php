@@ -16,24 +16,21 @@ class AdminBaseController extends BaseController{
 	}
 	
 	public function checkUser(){
-		define('CID', 7);
-		define('UID', 5);
-		return '';
 		$uid = session('a_uid');
-		if (!$uid){
-			$openid = Param('openid');
-			if ($openid){
-				$apiLogic = new ApiLogic();
-				$res = $apiLogic->login($openid);
-				$info = $res['info'];
-				if ($info){
-					$uid = $info['id'];
-					session('a_uid', $uid);
-					session('openid', $info['openid']);
-					session('cid', $info['cid']);
-				}
-			}
-		}
+// 		if (!$uid){
+// 			$openid = Param('openid');
+// 			if ($openid){
+// 				$apiLogic = new ApiLogic();
+// 				$res = $apiLogic->login($openid);
+// 				$info = $res['info'];
+// 				if ($info){
+// 					$uid = $info['id'];
+// 					session('a_uid', $uid);
+// 					session('openid', $info['openid']);
+// 					session('cid', $info['cid']);
+// 				}
+// 			}
+// 		}
 		if ($uid){
 	    		define('UID', $uid);
 	    		define('CID', session('cid'));

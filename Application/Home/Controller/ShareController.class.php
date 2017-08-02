@@ -8,6 +8,7 @@
 namespace Home\Controller;
 use Common\Controller\HomeBaseController;
 use Common\Logic\WxJSApiLogic;
+use Think\Log;
 
 class ShareController extends HomeBaseController {
 	
@@ -20,7 +21,8 @@ class ShareController extends HomeBaseController {
 	public function index() {
 		$extend = array(
 			'where'=>array(
-				'share'=>1
+				'share' => 1,
+				'cid' => CID
 			),
 		);
 		$this->assign('share_explain', get_config(CONFIG_SHARE_EXPLAIN));
@@ -33,6 +35,7 @@ class ShareController extends HomeBaseController {
 		
 		$jsLoigc = new WxJSApiLogic();
 		$res = $jsLoigc->getSignPackage();
+		Log::write("wx-debug: ".json_encode($res));
 		$this->assign('sign', $res);
 		$this->adminDisplay();
 	}

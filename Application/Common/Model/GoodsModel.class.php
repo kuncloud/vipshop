@@ -114,6 +114,7 @@ class GoodsModel extends BaseModel {
 		} else {
 			$this->where($wGoods)->setInc('praise');
 			$data = array(
+				'cid'=>CID,
 				'gid'=>$id,
 				'uid'=>$uid,
 				'create_time'=>time(),

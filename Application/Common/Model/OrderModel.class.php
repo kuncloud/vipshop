@@ -7,6 +7,7 @@
  */
 namespace Common\Model;
 
+use Think\Log;
 class OrderModel extends BaseModel {
 	
 	const DELAY_TIME = 900;			// 支付时间15分钟
@@ -131,15 +132,25 @@ class OrderModel extends BaseModel {
 			'status'=>$status
 		);
 		switch ($status){
+			case 'ok':
+				$msg = '订单已完成';
+				break;
 			case 'cancel':
 				$this->releaseGift($id);
+				$msg = '订单已取消';
 				break;
 			case 'sending':
 				$data['confirm_time'] = time() + self::CONFIRM_TIME;
+				$msg = '订单已发货';
 				break;
 		}
-		$this->where(array('id'=>$id))->save($data);
-		return 0;
+		$r = $this->where(array('id'=>$id))->save($data);
+		// 发送消息
+		$openid = M('Member')->where(array('id'=>$info['uid']))->getField('openid');
+		if ($openid) {
+			dd_msg($id, $msg, $openid);
+		}
+		return $r > 0 ? 0 : -1;
 	}
 	
 	/**
@@ -315,7 +326,8 @@ class OrderModel extends BaseModel {
 		
 		$input->SetBody("订单：$id");
 		$input->SetAttach("none");	// 自定义数据
-		$input->SetOut_trade_no($id.'_'.time());
+		$input->SetOut_trade_no($id);
+// 		$input->SetOut_trade_no($id.'_'.time());
 // 		$input->SetTotal_fee("1");
 		$price = ($info['total'] + $info['fare']) * 100;
 		$input->SetTotal_fee("$price");
@@ -327,6 +339,7 @@ class OrderModel extends BaseModel {
 		$input->SetOpenid($openId);
 		
 		$order = \WxPayApi::unifiedOrder($input);
+		Log::write(json_encode($order), Log::NOTICE);
 		$result = $tools->GetJsApiParameters($order);
 		
 		return $result;

@@ -250,7 +250,7 @@ function setStock(){
 			</div>
 		</div>
 	</div>
-	<div class="weui-cells__title">总库存为0时，会上架到“已售罄”商品列表，发布后商品同步更新，已库存数字为准。</div>
+	<div class="weui-cells__title">总库存为0时，会上架到“已售罄”商品列表，发布后商品同步更新，以库存数字为准。</div>
 	<div class="weui-cells weui-cells_form">
 		<div class="weui-cell">
 			<div class="weui-cell__hd">
@@ -265,7 +265,7 @@ function setStock(){
 				<label class="weui-label">总库存</label>
 			</div>
 			<div class="weui-cell__bd">
-				<input class="weui-input" type="number" name="stock" value="{$info['stock']}" pattern="[0-9]*" placeholder="请输入总库存" readonly>
+				<input class="weui-input" type="number" name="stock" value="{$info['stock']}" pattern="[0-9]*" placeholder="请输入总库存">
 			</div>
 		</div>
 	</div>

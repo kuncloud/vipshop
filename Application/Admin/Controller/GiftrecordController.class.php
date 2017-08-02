@@ -21,7 +21,10 @@ class GiftrecordController extends AdminBaseController {
 	}
 	
 	public function load(){
-		$where = array('gr.gid'=>array('gt', 0));
+		$where = array(
+			'gr.gid' => array('gt', 0),
+			'gr.cid' => CID
+		);
 		$join = 'INNER JOIN '.C('DB_PREFIX').'goods g on g.id=gr.gid INNER JOIN '.C('DB_PREFIX').'member m on gr.uid=m.id';
 		$field = 'gr.*, g.name,m.username';
 		$order = 'gr.create_time desc';

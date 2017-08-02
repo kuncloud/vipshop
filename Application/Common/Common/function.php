@@ -4,7 +4,11 @@ use Common\Logic\WxLogic;
 use Common\Logic\DateLogic;
 
 function generate_index(){
-	return first_charter(dv($_POST['username'], $_POST['nickname']));
+    $name = dv(Param('username'), Param('nickname'));
+    if ($name) {
+        return first_charter($name);
+    }
+// 	return first_charter(dv($_POST['username'], $_POST['nickname']));
 }
 
 // 获取首字母
@@ -51,8 +55,9 @@ function first_charter($str){
  * @author : panfeng <89688563@qq.com>
  * time : 2017-5-10下午1:47:14
  */
-function birth($birth){
-	if ($birthday = $_POST['birthday']){
+function birth($birth=''){
+    $birthday = Param('birthday');
+	if ($birthday){
 		$time = strtotime($birthday);
 		if ($_POST['birthtype'] == 1){
 			$dateLogic = new DateLogic($time);
@@ -61,8 +66,8 @@ function birth($birth){
 		$m = date('m', $time);
 		$d = date('d', $time);
 		$birth = "$m-$d";
+    	return $birth;
 	}
-	return $birth;
 }
 
 function birth_msg($openid, $nickname){

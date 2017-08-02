@@ -13,7 +13,6 @@ use Common\Logic\WxLogic;
 class PublicController extends Controller{
 	
 	public function _initialize(){
-		$this->assign('cid', Param('cid'));
 	}
 	
 	public function login(){

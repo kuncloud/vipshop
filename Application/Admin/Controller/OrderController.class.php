@@ -31,7 +31,8 @@ class OrderController extends AdminBaseController {
 		$st and $where['status'] = $st;
 		$consignee and $where['consignee'] = array('like', "%$consignee%");
 		
-		$extend = array('where'=>$where, 'relation'=>true);
+		$order = 'create_time desc';
+		$extend = array('where'=>$where, 'order'=>$order, 'relation'=>true);
 		parent::lists($this->model, true, $extend);
 	}
 	

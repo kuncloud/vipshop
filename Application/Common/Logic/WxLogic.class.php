@@ -61,7 +61,7 @@ class WxLogic extends BaseLogic
 	private function modelData($data, $type='jf'){
 		switch ($type){
 			case 'dd':
-				$template_id = get_config(CONFIG_MODULE_ORDER_PAY)['val'];
+				$template_id = get_config(CONFIG_MODULE_ORDER_CHANGE)['val'];
 // 				$template_id = 'XIxxiLafjSGFD_RLXAGFOIFvtjT2UK-neKY8RnFYVy8';
 				$data = array(
 					'first'=>array(

@@ -17,22 +17,28 @@ class GiftModel extends BaseModel {
 	public function open(){
 		$r = 1;
 		$pid = get_config(CONFIG_GIFT)['val'];
-		if ($this->has($pid)){
-			$this->error = '您今天已经抽过奖了';
-		} else {
-			// 获取中奖的数组
-			$gift = $this->award($pid);
-			// 添加抽奖纪录
-			$data = array(
-				'uid'=>UID,
-				'pid'=>$pid,
-				'gid'=>$gift['gid'],
-				'create_time'=>time()
-			);
-			$res = M('Gift_record')->add($data);
-			if ($res > 0){
-				$r = $gift;
+		
+		if ($pid) {
+			if ($this->has($pid)){
+				$this->error = '您今天已经抽过奖了';
+			} else {
+				// 获取中奖的数组
+				$gift = $this->award($pid);
+				// 添加抽奖纪录
+				$data = array(
+					'cid'=>CID,
+					'uid'=>UID,
+					'pid'=>$pid,
+					'gid'=>$gift['gid'],
+					'create_time'=>time()
+				);
+				$res = M('Gift_record')->add($data);
+				if ($res > 0){
+					$r = $gift;
+				}
 			}
+		} else {
+			$this->error = '商家未设置抽奖';
 		}
 		return $r;
 	}

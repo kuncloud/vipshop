@@ -54,6 +54,7 @@ class GoodsController extends AdminBaseController {
 		if ($name){
 			$where['name'] = array('like', "%$name%");
 		}
+		$where['cid'] = CID;
 		$extend = array('where'=>$where);
 		parent::lists(CONTROLLER_NAME, true, $extend);
 	}
