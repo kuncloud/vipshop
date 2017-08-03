@@ -35,6 +35,8 @@ function init(){
 		op($(this).data('title'), $(this).data('url'), function(){location.href='__SELF__'})
 		return false;
 	})
+	
+	$('.jump_url').on('click', function(){location.href=$(this).data('url')})
 }
 
 function listdata(lists){
@@ -42,8 +44,8 @@ function listdata(lists){
 		status = '{$json_status}'
 	status = eval( "("+status+")" )
 	for(var i in lists){
-		var item = lists[i]
-		html += '<div class="weui-cells"><div class="weui-cell top"><div class="weui-cell__bd">订单号 '+item.id+'</div>'
+		var item = lists[i];
+		html += '<div class="weui-cells"><div class="weui-cell top"><div class="weui-cell__bd jump_url" data-url="{:U(\'detail\')}/id/'+item.id+'">订单号 '+item.id+'</div>'
 		switch(item.status){
 			case 'ok':
 				html += '<div class="weui-cell__ft default">'
@@ -100,12 +102,12 @@ function listdata(lists){
     <form class="weui-search-bar__form" action="__SELF__">
         <div class="weui-search-bar__box">
             <i class="weui-icon-search"></i>
-            <input type="search" class="weui-search-bar__input" id="searchInput" name="consignee" placeholder="搜索订单号、收货人姓名或手机号" required="">
+            <input type="search" class="weui-search-bar__input" id="searchInput" name="consignee" value="{$consignee}" placeholder="搜索订单号、收货人姓名或手机号">
             <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
         </div>
         <label class="weui-search-bar__label" id="searchText">
             <i class="weui-icon-search"></i>
-            <span>搜索订单号、收货人姓名或手机号</span>
+            <span>{$consignee|default="搜索订单号、收货人姓名或手机号"}</span>
         </label>
     </form>
     <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>

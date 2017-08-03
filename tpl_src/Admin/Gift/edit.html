@@ -32,7 +32,15 @@ $(function(){
 				<label class="weui-label">概率(%)</label>
 			</div>
 			<div class="weui-cell__bd">
-				<input class="weui-input" name="rate" type="number" value="{$info['rate']}" required placeholder="设置概率" />
+				<input class="weui-input" name="rate" type="number" value="{$info['rate']}" pattern="[0-9]*" required placeholder="设置概率" />
+			</div>
+		</div>
+		<div class="weui-cell">
+			<div class="weui-cell__hd">
+				<label class="weui-label">奖品数</label>
+			</div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" name="count" type="number" value="{$info['count']}" pattern="[0-9]*" required placeholder="设置奖品数量" />
 			</div>
 		</div>
 	</div>

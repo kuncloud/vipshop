@@ -1,0 +1,34 @@
+<extend name="Public:base" />
+<block name="content">
+<form id="form" action="__SELF__" method="POST">
+	<div class="weui-cells weui-cells_form">
+		<div class="weui-cell">
+			<div class="weui-cell__hd">
+				<label class="weui-label">旧密码：</label>
+			</div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" type="password" name="opsw" required placeholder="请输入旧密码">
+			</div>
+		</div>
+		<div class="weui-cell">
+			<div class="weui-cell__hd">
+				<label class="weui-label">新密码：</label>
+			</div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" type="password" name="npsw" required placeholder="请输入新密码">
+			</div>
+		</div>
+		<div class="weui-cell">
+			<div class="weui-cell__hd">
+				<label class="weui-label">确认密码：</label>
+			</div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" type="password" name="cpsw" required placeholder="请再次输入新密码">
+			</div>
+		</div>
+	</div>
+	<div class="bottom-box">
+		<input type="submit" class="weui-btn weui-btn__confirm" value="保存" />
+	</div>
+</form>
+</block>

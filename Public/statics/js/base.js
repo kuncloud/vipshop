@@ -72,7 +72,7 @@ $(function(){
     			kf = $(this).data('kf') || ''
 		weui.dialog({
 		    title: '',
-		    content: '<p>您的注册手机号码是</p><p class="num">'+phone+'</p><p>请告知客服</p>',
+		    content: '<p>您的账号是</p><p class="num">'+phone+'</p><p>请告知客服</p>',
 		    className: 'custom-classname',
 		    buttons: [
 		        {

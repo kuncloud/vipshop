@@ -16,8 +16,10 @@ class GoodsController extends AdminBaseController {
 	
 	public function index() {
 		$classify = M('Classify')->where(array('cid'=>CID))->select();
+		$name = Param('name');
+		$st = Param('st');
 		$this->assign('classify', $classify);
-		$this->assign('url', U('load', 'st='.Param('st')));
+		$this->assign('url', U('load', "st=$st&name=$name"));
 		$this->adminDisplay();
 	}
 	

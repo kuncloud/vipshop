@@ -16,15 +16,24 @@ class MemberController extends AdminBaseController {
 	}
 	
 	public function index(){
-		$this->assign('url', U('load'));
+		$username = Param('username');
+		$this->assign('username', $username);
+		$this->assign('url', U('load', "username=$username"));
 		$this->adminDisplay();
 	}
 	
 	public function load(){
 		$username = Param('username');
-		$username and $where['username'] = array('like', "%$username%");
 		$where['pid'] = UID;
 		$where['cid'] = CID;
+		if ($username) {
+			$username = urldecode($username);
+			$where['_complex'] = array(
+				'username' => array('like', "%$username%"),
+				'nickname' => array('like', "%$username%"),
+				'_logic' => 'or'
+			);
+		}
 		$extend = array('where'=>$where);
 		$lists = parent::lists($this->model, true, $extend);
 	}

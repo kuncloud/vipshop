@@ -41,7 +41,7 @@ function share(){
 }
 
 function add(){
-	var url = "{:U(share)}",
+	var url = "{:U('share')}",
 		id = "{$info['id']}"
 	$.post(url, {id}, function(json){
 		if (json.status == 0){

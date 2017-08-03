@@ -33,6 +33,9 @@ class GiftModel extends BaseModel {
 					'create_time'=>time()
 				);
 				$res = M('Gift_record')->add($data);
+				
+				$gid = $gift['id'];
+				$gid and $this->where(['id'=>$gid])->setDec('count');
 				if ($res > 0){
 					$r = $gift;
 				}
@@ -51,7 +54,7 @@ class GiftModel extends BaseModel {
 	 * time : 2017-4-8下午2:32:32
 	 */
 	private function award($pid){
-		$where = array('cid'=>CID, 'pid'=>$pid);
+		$where = array('cid'=>CID, 'pid'=>$pid, 'count'=>array('gt', 0));
 		$total = $this->where($where)->sum('rate');
 		$gift = $this->where($where)->getField('id, gid, rate');
 		$gift[0] = array('id'=>'0', 'gid'=>'0', 'rate'=>''.(100-$total));

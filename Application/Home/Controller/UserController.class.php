@@ -34,7 +34,25 @@ class UserController extends HomeBaseController {
 	}
 	
 	public function info() {
+		$model = D($this->model);
+		$uid = UID;
+		$info = $model->field('username,jf,phone,vname')->find($uid);
+		$this->assign('info', $info);
 		$this->adminDisplay();
+	}
+	
+	public function reset() {
+		$model = D($this->model);
+		$uid = UID;
+		if (IS_POST) {
+			$res = $model->resetPsw();
+			$result = array('status'=>$res, 'msg'=>$model->getError(), 'url'=>U('info'));
+			echo json_encode($result);die;
+		} else {
+			$info = $model->field('username,jf,phone,vname')->find($uid);
+			$this->assign('info', $info);
+			$this->adminDisplay();
+		}
 	}
 	
 	public function address() {

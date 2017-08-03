@@ -29,7 +29,7 @@ class GiftController extends AdminBaseController {
 			'g.pid'=>$pid
 		);
 		$join = 'sys_goods go on go.id = g.gid';
-		$field = 'g.id, g.rate, g.type, go.name, go.corver, go.stock, go.sales, go.price';
+		$field = 'g.id, g.pid, g.rate, g.type, go.name, go.corver, go.stock, go.sales, go.price';
 		$lists = M('Gift g')->where($where)->join($join)->field($field)->select();
 		$this->assign('lists', $lists);
 		$this->adminDisplay();
@@ -49,6 +49,17 @@ class GiftController extends AdminBaseController {
 			$lists = M('Goods')->where($where)->select();
 			$this->assign('lists', $lists);
 			$this->assign('url', $url);
+		} else {
+			$id = Param('id');
+			$pid = Param('pid');
+			$rate = Param('rate', 0, 'int');
+			$where = [ 'pid' => $pid ];
+			$id and $where['id'] = ['neq', $id];
+			$total = M(CONTROLLER_NAME)->where($where)->sum('rate');
+			if (intval($total) + intval($rate) > 100) {
+				$res = [ 'status'=>-1, 'msg'=>"概率超过100%" ];
+				echo json_encode($res);die;
+			}
 		}
 		parent::edit(CONTROLLER_NAME);
 	}

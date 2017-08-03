@@ -138,7 +138,9 @@ class HomeBaseController extends BaseController{
 			),
 			'User'=>array(
 				'index'=>'我的',
+				'info'=>'个人信息',
 				'about'=>'关于',
+				'reset'=>'修改密码',
 			),
 		);
 	}

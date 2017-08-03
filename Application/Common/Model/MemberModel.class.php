@@ -49,6 +49,34 @@ class MemberModel extends BaseModel{
 		}
 	}
 	
+	// 修改密码
+	public function resetPsw($data=[]) {
+		$data = dv($data, $_POST);
+		extract($data);
+		$id = dv($id, UID);
+		
+		if ($npsw === $cpsw) {
+			$info = $this->find($id);
+			if ($info) {
+				if (encrypt($opsw, $info['rand']) === $info['psw']) {
+					$newPsw = encrypt($npsw, $info['rand']);
+					$r = $this->where(['id'=>$id])->setField('psw', $newPsw);
+					$res = $r > 0 ? 0 : -4;
+				} else {
+					$res = -3;
+					$this->error = '旧密码错误';
+				}
+			} else {
+				$res = -2;
+				$this->error = '用户不存在';
+			}
+		} else {
+			$res = -1;
+			$this->error = '两次密码不一致';
+		}
+		return $res;
+	}
+	
 	public function reg(){
 		$_POST['rand'] = $rand = mt_rand(100000, 999999);
 		$_POST['psw'] = encrypt(dv($_POST['psw'], 123456), $rand);

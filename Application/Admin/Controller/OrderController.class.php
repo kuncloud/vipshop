@@ -20,7 +20,20 @@ class OrderController extends AdminBaseController {
 	public function index(){
 		$st = Param('st');
 		$this->assign('st', $st);
-		$this->assign('url', U('load', "st=$st"));
+		$consignee = Param('consignee');
+		$this->assign('consignee', $consignee);
+		$this->assign('url', U('load', "st=$st&consignee=$consignee"));
+		$this->adminDisplay();
+	}
+	
+	public function detail() {
+		// 设置订单状态
+		$model = D($this->model);
+		$model->updateStatus(UID);
+
+		$id = Param('id');
+		$info = $model->relation(true)->find($id);
+		$this->assign('info', $info);
 		$this->adminDisplay();
 	}
 	
@@ -29,7 +42,14 @@ class OrderController extends AdminBaseController {
 		$consignee = Param('consignee');
 		$where = array('cid'=>CID);
 		$st and $where['status'] = $st;
-		$consignee and $where['consignee'] = array('like', "%$consignee%");
+		if ($consignee) {
+			$consignee = urldecode($consignee);
+			$where['_complex'] = array(
+				'consignee' => array('like', "%$consignee%"),
+				'id' => array('like', "%$consignee%"),
+				'_logic' => 'or',
+			);
+		}
 		
 		$order = 'create_time desc';
 		$extend = array('where'=>$where, 'order'=>$order, 'relation'=>true);

@@ -1151,7 +1151,7 @@ php;
 	        		distance: 50,
 	        	    loadDownFn : function(me){
 	        	        \$.ajax({
-	        	            type: 'POST',
+	        	            type: 'GET',
 	        	            url: '$url',
 	        			    data: {page},
 	        	            dataType: 'json',
