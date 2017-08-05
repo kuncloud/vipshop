@@ -21,7 +21,7 @@ class ApiLogic{
 	
 	public function getEmploy($uid){
 		$url = $this->pxUrl . 'uinfo';
-		$data = array('id', $uid);
+		$data = array('id'=>$uid);
 		$res = $this->https_request($url, $data);
 		return json_decode($res, true);
 	}
