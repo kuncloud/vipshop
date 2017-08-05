@@ -24,7 +24,19 @@ class MemberController extends AdminBaseController {
 	
 	public function load(){
 		$username = Param('username');
-		$where['pid'] = UID;
+		$uid = UID;
+		switch (ATYPE){
+			case 'employ':
+				$where['pid'] = $uid;
+				break;
+			case 'manager':
+			case 'top':
+				$logic = new ApiLogic();
+				$ainfo = session('ainfo');
+				$ids = $logic->getEids($uid, ATYPE, $ainfo['sid']);
+				$where['pid'] = ['in', $ids['lists']];
+				break;
+		}
 		$where['cid'] = CID;
 		if ($username) {
 			$username = urldecode($username);

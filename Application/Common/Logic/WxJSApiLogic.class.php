@@ -1,12 +1,14 @@
 <?php
 namespace Common\Logic;
 
+use Think\Log;
 class WxJSApiLogic extends WxLogic
 {
-
+	
     public function getSignPackage()
     {
         $jsapiTicket = $this->getJsApiTicket();
+        Log::write('wx-tiket: '.json_encode($jsapiTicket));
         
         // 注意 URL 一定要动态获取，不能 hardcode.
         $protocol = (! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
@@ -44,7 +46,8 @@ class WxJSApiLogic extends WxLogic
     private function getJsApiTicket()
     {
         // jsapi_ticket 应该全局存储与更新，以下代码以写入到文件中做示例
-        $ticket = S('ticket');
+        $ticketname = 'ticket_'.$this->appid;
+        $ticket = S($ticketname);
         if (!$ticket) {
             // 如果是企业号用以下 URL 获取 ticket
             // $url = "https://qyapi.weixin.qq.com/cgi-bin/get_jsapi_ticket?access_token=$accessToken";
@@ -52,7 +55,7 @@ class WxJSApiLogic extends WxLogic
             $res = json_decode($this->httpGet($url));
             $ticket = $res->ticket;
             if ($ticket) {
-                S('ticket', $ticket, array('expire'=>time()+7200));
+                S($ticketname, $ticket, array('expire'=>time()+7200));
             }
         }
         

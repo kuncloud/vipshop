@@ -35,6 +35,7 @@ class AdminBaseController extends BaseController{
 	    		define('UID', $uid);
 	    		define('CID', session('cid'));
 	    		define('OPENID', session('openid'));
+	    		define('ATYPE', session('a_type'));
 		} else {
 			redirect(U('Public/login', 'cid='.Param('cid')));
 		}

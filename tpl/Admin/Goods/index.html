@@ -1,11 +1,7 @@
 <extend name="Public:base"/><block name="style"><link rel="stylesheet" href="__ADMIN__/Goods/index.css"/></block><block name="js"><script type="text/javascript">
 $(function(){
 	history.replaceState({},'','{:U("Index/index")}');
-	//init()
-});
-
-function init(){
-	$('.jump_url').on('click', function(){location.href=$(this).data('url')})
+	
 	// 选中
 	$('.weui-cell__bd span:last').on('click', function(){
 		// 显示隐藏条件
@@ -19,6 +15,11 @@ function init(){
 		$(this).parents('.slide-down').fadeOut()
 		$('.weui-cell__bd span:last').removeClass('show')
 	})
+	//init()
+});
+
+function init(){
+	$('.jump_url').on('click', function(){location.href=$(this).data('url')})
 	
 	$('body').on('click', function(){
 		$('.slide-down').fadeOut()

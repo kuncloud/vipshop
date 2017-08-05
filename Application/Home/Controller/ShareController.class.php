@@ -21,6 +21,7 @@ class ShareController extends HomeBaseController {
 	public function index() {
 		$extend = array(
 			'where'=>array(
+				'status' => 1,
 				'share' => 1,
 				'cid' => CID
 			),

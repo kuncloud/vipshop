@@ -26,6 +26,13 @@ class ApiLogic{
 		return json_decode($res, true);
 	}
 	
+	public function getEids($id, $type='manager', $sid=0){
+		$url = $this->pxUrl . 'eids';
+		$data = array('id'=>$id, 'type'=>$type, 'sid'=>$sid);
+		$res = $this->https_request($url, $data);
+		return json_decode($res, true);
+	}
+	
 	public function getStoreByCid($cid){
 		$url = $this->pxUrl . 'stores';
 		$data['cid'] = $cid;

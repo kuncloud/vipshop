@@ -16,7 +16,10 @@ class ActivityController extends HomeBaseController {
 	}
 	
 	public function index() {
-		parent::lists();
+		$extend = array(
+			'where' => array('cid'=>CID, 'status'=>1, 'share'=>0)
+		);
+		parent::lists(CONTROLLER_NAME, false, $extend);
 	}
 	
 	public function info() {

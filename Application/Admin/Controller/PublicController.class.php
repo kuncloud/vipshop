@@ -28,8 +28,10 @@ class PublicController extends Controller{
 				$msg = '登录成功';
 				
 				session('a_uid', $info['id']);
+				session('a_type', $info['type']);
 				session('cid', $info['cid']);
 				session('openid', $info['openid']);
+				session('ainfo', $info);
 			} else {
 				$status = -1;
 				$msg = $res['err_msg'];
@@ -45,6 +47,7 @@ class PublicController extends Controller{
 		session('a_uid', null);
 // 		session('cid', null);
 		session('openid', null);
+		session('a_type', null);
 		
 		echo json_encode(array('status'=>0, 'msg'=>'已退出'));die;
 	}
