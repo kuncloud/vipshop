@@ -902,7 +902,7 @@ php;
 	    	
 	    	$str = <<<php
     			<div class="weui-cells weui-cells_form $classname" id="$uploadId">
-		        <input type="hidden" id="$id" value="$val" name="$id">
+		        <input class="hidden" id="$id" value="$val" name="$id">
 	            <div class="weui-cell">
 	                <div class="weui-cell__bd">
 	                    <div class="weui-uploader">

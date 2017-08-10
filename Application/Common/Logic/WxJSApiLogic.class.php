@@ -52,10 +52,10 @@ class WxJSApiLogic extends WxLogic
             // 如果是企业号用以下 URL 获取 ticket
             // $url = "https://qyapi.weixin.qq.com/cgi-bin/get_jsapi_ticket?access_token=$accessToken";
             $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=$this->access_token";
-            $res = json_decode($this->httpGet($url));
-            $ticket = $res->ticket;
+            $res = json_decode($this->httpGet($url), true);
+            $ticket = $res['ticket'];
             if ($ticket) {
-                S($ticketname, $ticket, array('expire'=>time()+7200));
+                S($ticketname, $ticket, array('expire'=>$res['expires_in']));
             }
         }
         
