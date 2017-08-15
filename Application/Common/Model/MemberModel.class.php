@@ -166,14 +166,16 @@ class MemberModel extends BaseModel{
 	    
 	    $res = $this->where($where)->setField('pid', $to);
 	    
-	    $add = array(
-	        'origin'=>$to,
-	        'content'=>"转移会员, from: $from, to: $to, id: $id, tagid: $tagid",
-	        'create_time'=>time()
-	    );
-	    M('Log')->add($data);
+	    if ($res) {
+		    $add = array(
+		        'origin'=>$to,
+		        'content'=>"转移会员, from: $from, to: $to, id: $id, tagid: $tagid",
+		        'create_time'=>time()
+		    );
+		    M('Log')->add($add);
+	    }
 	    
-	    return $res > 0 ? 0 : -1;
+	    return 0;
 	}
 	
 }

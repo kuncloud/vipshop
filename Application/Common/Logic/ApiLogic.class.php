@@ -33,6 +33,14 @@ class ApiLogic{
 		return json_decode($res, true);
 	}
 	
+	public function getStoreById($id){
+		$url = $this->pxUrl . 'store';
+		$data['id'] = $id;
+		
+		$res = $this->https_request($url, $data);
+		return json_decode($res, true);
+	}
+	
 	public function getStoreByCid($cid){
 		$url = $this->pxUrl . 'stores';
 		$data['cid'] = $cid;
