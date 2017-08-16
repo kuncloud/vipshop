@@ -49,45 +49,41 @@ class HomeBaseController extends BaseController{
 
 	public function load_goods() {
 		$page = Param('page');
-		if (IS_POST) {
-			$extend = array(
-				'where'=>array(
-					'cid'=>CID,
-					'status'=>1,
-					'remain'=>array('gt', 0)
-				),
-			);
-			$data = parent::lists('Goods', false, $extend, true);
-			$html = '';
-			foreach ($data as $k=>$v){
-				$img = img_pre() . $v['corver'];
-				$url = U('Goods/info', 'id='.$v['id']);
-				if ($k % 2 == 0){
-					$html .="<div class='weui-cell list'>
-							<a href='$url' class='weui-cell__bd'>";
-				} else {
-					$html .= "<a href='$url' class='weui-cell__bd second'>";
-				}
-				$price = '';
-				$v['jf'] and $price = $v['jf'] . '积分';
-				$v['price'] and $price ? $price .= ' + ¥' . $v['price'] : $price = '¥' . $v['price'];
-				$html .= "
-							<div>
-								<img src='$img'>
-							</div>
-							<div class='name'>{$v['name']}</div>
-							<div class='price'>$price</div>
-							<div class='detail'>{$v['detail']} 剩余 <font>{$v['remain']}</font> 份</div>
-						</a>";
-				if ($k % 2 == 1){
-					$html .= "</div>";
-				}
+		$extend = array(
+			'where'=>array(
+				'cid'=>CID,
+				'status'=>1,
+				'remain'=>array('gt', 0)
+			),
+		);
+		$data = parent::lists('Goods', false, $extend, true);
+		$html = '';
+		foreach ($data as $k=>$v){
+			$img = img_pre() . $v['corver'];
+			$url = U('Goods/info', 'id='.$v['id']);
+			if ($k % 2 == 0){
+				$html .="<div class='weui-cell list'>
+						<a href='$url' class='weui-cell__bd'>";
+			} else {
+				$html .= "<a href='$url' class='weui-cell__bd second'>";
 			}
-			$return['html'] = $html;
-			echo json_encode($return);die;
-		} else {
-			$this->display();
+			$price = '';
+			$v['jf'] and $price = $v['jf'] . '积分';
+			$v['price'] and $price ? $price .= ' + ¥' . $v['price'] : $price = '¥' . $v['price'];
+			$html .= "
+						<div>
+							<img src='$img'>
+						</div>
+						<div class='name'>{$v['name']}</div>
+						<div class='price'>$price</div>
+						<div class='detail'>{$v['detail']} 剩余 <font>{$v['remain']}</font> 份</div>
+					</a>";
+			if ($k % 2 == 1){
+				$html .= "</div>";
+			}
 		}
+		$return['html'] = $html;
+		echo json_encode($return);die;
 	}
 	
 	public function menu(){
