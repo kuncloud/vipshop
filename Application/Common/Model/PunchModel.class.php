@@ -43,10 +43,13 @@ class PunchModel extends BaseModel {
 			$max = intval($config['val'][1]);
 			$scale = intval($config['val'][2]);
 			// 当打卡到达翻倍天数时重置
-			if ($day == $max){
-				$jf *= $scale;
+			if ($day == $max) {
 				$this->where(array('uid'=>$uid))->setField('status', 0);
 				$day = 0;
+			}
+			// 当本次打卡达到翻倍天数
+			if ($day + 1 >= $max) {
+				$jf *= $scale;
 			}
 			if ($day){
 				$where = array('uid'=>$uid, 'status'=>1);
