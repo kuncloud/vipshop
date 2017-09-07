@@ -26,16 +26,22 @@ class ActivityModel extends BaseModel {
 		$jf = $_POST['jf'];
 		$rm = M('Member')->where(array('id'=>$_POST['uid']))->setInc('jf', $jf);
 		
-		$modelRecord = D('Record');
-		if ($modelRecord->create()){
-			$rr = $modelRecord->add();
-		}
+		$modelRecord = M('Record');
+		$data = array(
+			'uid'	=> $_POST['uid'],
+			'cid'	=> CID,
+			'jf'		=> $jf,
+			'pid'	=> $_POST['pid'],
+			'title'	=> $_POST['title'],
+			'create_time' => time()
+		);
+		$rr = $modelRecord->add($data);
 		
 		if ($rm && $rr){
 			$this->commit();
 			
 			// 发送模板消息
-			jf_msg($_POST['uid'], session('openid'), $_POST['jf'], $_POST['title']);
+// 			jf_msg($_POST['uid'], session('openid'), $_POST['jf'], $_POST['title']);
 			return 0;
 		} else {
 			$this->rollback();
