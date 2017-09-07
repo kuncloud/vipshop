@@ -108,4 +108,10 @@ class MemberController extends AdminBaseController {
 		echo json_encode(array('status'=>0, 'lists'=>$lists));die;
 	}
 	
+	public function export() {
+		$model = D($this->model);
+		$ainfo = session('ainfo');
+		$model->export(UID, ATYPE, $ainfo['sid']);
+	}
+	
 }

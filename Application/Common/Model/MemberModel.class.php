@@ -7,6 +7,7 @@
  */
 namespace Common\Model;
 
+use Common\Logic\FileLogic;
 class MemberModel extends BaseModel{
 	
 	public $_validate = array(
@@ -176,6 +177,44 @@ class MemberModel extends BaseModel{
 	    }
 	    
 	    return 0;
+	}
+	
+	public function export($uid, $type, $sid=0) {
+		switch ($type) {
+			case 'employ':
+				$where['pid'] = $uid;
+				break;
+			case 'top':
+				$where['cid'] = $uid;
+				break;
+			case 'manager':
+				$where['sid'] = $sid;
+				break;
+		}
+		$lists = $this->where($where)->select();
+		if ($lists) {
+			$fileLogic = new FileLogic();
+			$expCellName  = array(
+					array('id','ID'),
+// 					array('cid','公司id'),
+// 					array('sid','门店id'),
+// 					array('pid','店员id'),
+					array('openid','微信id'),
+					array('nickname','昵称'),
+					array('username','用户名'),
+// 					array('index','所在地'),
+					array('avatar','头像url'),
+					array('mobile','手机品牌'),
+					array('phone','手机号'),
+					array('jf','积分'),
+// 					array('gender','电话'),
+					array('province','省'),
+					array('city','市'),
+					array('district','区'),
+					array('address','详细地址')
+			);
+			$fileLogic->excel('会员信息', $expCellName, $lists);
+		}
 	}
 	
 }
